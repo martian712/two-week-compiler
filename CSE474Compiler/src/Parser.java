@@ -141,6 +141,44 @@ public class Parser
                 match( Token.SEMICOLON );
                 break;
             }
+            case Token.INT :
+            {
+            	match( Token.INT);
+            	lValue = identifier();
+            	if(currentToken.getType() == Token.ASSIGNOP)		//<statment> -> <assignment>;
+            	{
+            		match( Token.ASSIGNOP );
+                    expr = expression();
+                    codeFactory.generateAssignment( lValue, expr );
+                    match( Token.SEMICOLON );
+                    break;
+            	}
+            	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration>;
+            	{
+            		//TODO int declaration
+            		match( Token.SEMICOLON);
+            		break;
+            	}
+            }
+            case Token.STRING :
+            {
+            	match( Token.STRING);
+            	lValue = identifier();
+            	if(currentToken.getType() == Token.ASSIGNOP)
+            	{
+            		match( Token.ASSIGNOP);
+            		//TODO String expression
+            		//TODO String assignement
+            		match( Token.SEMICOLON);
+            		break;
+            	}
+            	else if(currentToken.getType() == Token.SEMICOLON)
+            	{
+            		//TODO String declaration
+            		match( Token.SEMICOLON);
+            		break;
+            	}
+            }
             default: error(currentToken);
         }
     }
