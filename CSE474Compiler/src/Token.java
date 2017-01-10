@@ -19,6 +19,8 @@ public class Token
     public final static int MINUS = 12;
     public final static int INTLITERAL = 13;
     public final static int EOF = 14;
+    public final static int INT = 15;
+    public final static int STRING = 16;
 
     public Token( String tokenString, int tokenType)
     {
@@ -27,10 +29,12 @@ public class Token
         if (tokenType == ID)
         {
             String temp = tokenString.toLowerCase();
-            if ( temp.compareTo( "begin") == 0) type = BEGIN;
+            if ( temp.compareTo("begin") == 0) type = BEGIN;
             else if ( temp.compareTo( "end") == 0) type = END;
             else if ( temp.compareTo("read") == 0) type = READ;
             else if ( temp.compareTo("write") == 0) type = WRITE;
+            else if ( temp.compareTo("int") == 0) type = INT;
+            else if ( temp.compareTo("string") == 0) type = STRING;
         }
     }
     public String getId()
