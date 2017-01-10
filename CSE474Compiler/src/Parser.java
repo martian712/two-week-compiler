@@ -193,25 +193,35 @@ public class Parser
         }
     }
     
-    private Expression assignment()
-    {
-    	if(symbolTable.checkSTforItem(currentToken.getId()))
-    	{
-    		//TODO update entry in symbol table
-    	}
-    	else
-    	{
-    		if(previousToken.getType() == Token.INT)
-    		{
-    			//TODO assign a new int
-    		}
-    		else if(previousToken.getType() == Token.STRING)
-    		{
-    			//TODO assign a new string
-    		}
-    	}
-    	return expression();	//REMOVE THIS!!! Returns should happen in the if blocks, maybe this shouldn't be return type expression at all.
-    }
+	private void assignment() {
+		if (symbolTable.checkSTforItem(currentToken.getId())) {
+			// TODO update entry in symbol table
+		} else {
+			Expression lValue;
+			Expression expr;
+			switch (previousToken.getType()) {
+			case Token.INT: {
+				// TODO assign a new int to symbol table
+				lValue = identifier();
+                match( Token.ASSIGNOP );
+                expr = expression();
+                codeFactory.generateAssignment( lValue, expr );	//TODO this may need to be moved to after the match (We don't want to add a symbol to the table if it is not a valid assignment statment?)
+                match( Token.SEMICOLON );
+                break;
+
+			}
+			case Token.STRING: {
+				// TODO assign a new string to symbol table
+				lValue = identifier();
+                match( Token.ASSIGNOP );
+                expr = expression();
+                codeFactory.generateAssignment( lValue, expr );	//TODO same todo as the one in the Token.INT case above
+                match( Token.SEMICOLON );
+                break;
+			}
+			}
+		}
+	}
     
     private void idList()
     {
