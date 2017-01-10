@@ -1,3 +1,5 @@
 BEGIN
-	x := 5;
+INT x := 5;
+STRING x := "String"
 END
+

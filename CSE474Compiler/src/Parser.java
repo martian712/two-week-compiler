@@ -116,6 +116,16 @@ public class Parser
         {
             case Token.ID:
             {
+            	/*
+            	if(symbolTable.checkSTforItem(currentToken.getId()))
+            	{
+            		assignment();
+            	}
+            	else
+            	{
+            		error(currentToken);
+            	}
+            	*/
                 lValue = identifier();
                 match( Token.ASSIGNOP );
                 expr = expression();
@@ -145,7 +155,7 @@ public class Parser
             {
             	match( Token.INT);
             	lValue = identifier();
-            	if(currentToken.getType() == Token.ASSIGNOP)		//<statment> -> <assignment>;
+            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment>;
             	{
             		match( Token.ASSIGNOP );
                     expr = expression();
@@ -168,7 +178,7 @@ public class Parser
             	{
             		match( Token.ASSIGNOP);
             		//TODO String expression
-            		//TODO String assignement
+            		//TODO String assignment
             		match( Token.SEMICOLON);
             		break;
             	}
@@ -181,6 +191,26 @@ public class Parser
             }
             default: error(currentToken);
         }
+    }
+    
+    private Expression assignment()
+    {
+    	if(symbolTable.checkSTforItem(currentToken.getId()))
+    	{
+    		//TODO update entry in symbol table
+    	}
+    	else
+    	{
+    		if(previousToken.getType() == Token.INT)
+    		{
+    			//TODO assign a new int
+    		}
+    		else if(previousToken.getType() == Token.STRING)
+    		{
+    			//TODO assign a new string
+    		}
+    	}
+    	return expression();	//REMOVE THIS!!! Returns should happen in the if blocks, maybe this shouldn't be return type expression at all.
     }
     
     private void idList()

@@ -21,6 +21,7 @@ public class Token
     public final static int EOF = 14;
     public final static int INT = 15;
     public final static int STRING = 16;
+    public final static int STRINGLITERAL = 17;
 
     public Token( String tokenString, int tokenType)
     {

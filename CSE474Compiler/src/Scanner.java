@@ -112,7 +112,25 @@ public class Scanner
             tokenStr = ":=";
             tokenType = Token.ASSIGNOP;
             i+=2;
-        } else  if ( Character.isDigit((currentLine.charAt(i))) )// find literals
+        } else if(currentLine.charAt(i) == '"')				//Matching for StringLiterals
+        {
+        	while(i < len && currentLine.charAt(i) != '"')
+        	{
+        		i++;
+        	}
+        	if(currentLine.charAt(i) == '"')				//Making sure there is a closing "
+        	{
+        		tokenStr = currentLine.substring(currentLocation + 1, i - 1);
+        		tokenType = Token.STRINGLITERAL;
+        		i++;
+        	}
+        	else
+        	{
+        		tokenStr = currentLine.substring(currentLocation, i);
+        		tokenType = Token.LexERROR;
+        	}
+        } 
+        else  if ( Character.isDigit((currentLine.charAt(i))) )// find literals
         {
             while ( i < len && Character.isDigit(currentLine.charAt(i)) )
             {
