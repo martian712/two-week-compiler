@@ -1,23 +1,27 @@
+import java.util.HashMap;
 import java.util.Vector; 
 
 class SymbolTable
 {
         
-    private Vector st;
+    private HashMap<String,Value> st;
     
     public SymbolTable()
     {
-        st = new Vector();
+        st = new HashMap<String,Value>();
     }
     
-    public void addItem( Token token )
-    {
-        st.add( token.getId() );
+    public void addItem(String key, int value){
+    	st.put(key, new Value(value));
     }
     
-    public boolean checkSTforItem( String id )
+    public void addItem(String key, String value){
+    	st.put(key, new Value(value));
+    }
+    
+    public boolean checkSTforItem( String key )
     {
-       return st.contains( id );
+       return st.containsKey(key);
     }
 
 }
