@@ -214,7 +214,7 @@ public class Parser
 				// TODO assign a new string to symbol table
 				lValue = identifier();
                 match( Token.ASSIGNOP );
-                expr = expression();
+                expr = expression();							//TODO this needs to be different for strings somehow! string() - <string> -> StringLiteral | StringLiteral + <string>
                 codeFactory.generateAssignment( lValue, expr );	//TODO same todo as the one in the Token.INT case above
                 match( Token.SEMICOLON );
                 break;
