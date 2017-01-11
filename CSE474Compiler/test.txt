@@ -5,8 +5,7 @@ x := 7;
 <<<<<<< HEAD
 x := 10;
 x := 123;
-END
-
+END 
 =======
 END 
 >>>>>>> refs/remotes/compiler/master
