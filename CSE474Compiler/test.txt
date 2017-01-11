@@ -1,5 +1,9 @@
 BEGIN
-INT x := 2;
+INT x;
 x := 5;
+<<<<<<< HEAD
 x := 7;
 END
+=======
+END
+>>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler
