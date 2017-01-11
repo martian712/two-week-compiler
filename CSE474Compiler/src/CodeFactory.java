@@ -244,6 +244,12 @@ class CodeFactory {
 			System.out.println("\tMOVL %eax, " + lValue.expressionName);
 		}
 	}
+	
+	void generateStrAssignment(Expression lValue, StrExpression expr){
+		if (expr.expressionType == StrExpression.STRLITERALEXPR){
+			
+		}
+	}
 
 	void generateStart() {
 		System.out.println(".text\n.global _start\n\n_start:\n");
