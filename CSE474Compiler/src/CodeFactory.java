@@ -64,8 +64,8 @@ class CodeFactory {
 		}else if(strVariables.checkSTforItem(idName)){
 			System.out.println("\tMOV $4, %eax");
 			System.out.println("\tMOV $1, %ebx");
-			System.out.println("$" + idName + ", %ecx");
-			System.out.println("$" + idName + "Len, %edx");
+			System.out.println("\tMOV $" + idName + ", %ecx");
+			System.out.println("\tMOV $" + idName + "Len, %edx");
 			System.out.println("int $0x80");
 		}else
 		// String reverseLoopLabel = generateLabel("reverseLoop");

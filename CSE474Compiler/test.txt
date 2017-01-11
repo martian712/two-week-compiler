@@ -1,5 +1,4 @@
 BEGIN
 STRING y := "Hello";
-STRING x := "World";
-y := x;
+WRITE(y);
 END
