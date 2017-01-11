@@ -1,4 +1,6 @@
 BEGIN
-STRING y := "Hello";
-WRITE(y);
+STRING x:= "Hello";
+STRING y:= "World";
+STRING z;
+z := x+y;
 END

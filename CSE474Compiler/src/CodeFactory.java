@@ -266,7 +266,12 @@ class CodeFactory {
 		}
 		else {
 			if(strVariables.checkSTforItem(lValue.expressionName)) {
-				strVariables.getValue(lValue.expressionName).setValue(strVariables.getValue(expr.expressionStrValue).getStringValue());
+				//strVariables.getValue(lValue.expressionName).setValue(strVariables.getValue(expr.expressionStrValue).getStringValue());
+				//Value a = strVariables.getValue(lValue.expressionName);
+				//Value b = strVariables.getValue(expr.expressionStrValue);
+				//String c = b.getStringValue();
+				//a.setValue(c);
+				strVariables.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
 			}
 			else {
 				System.out.println("Syntax Error! Variable on right side not previously declared!");
@@ -275,7 +280,19 @@ class CodeFactory {
 	}
 	
 	StrExpression generateStrConcat(StrExpression left, StrExpression right){
-		StrExpression tempExpr = new StrExpression(StrExpression.STRTEMPEXPR, createTempName(), left.expressionStrValue + right.expressionStrValue);
+		String leftVal = "";
+		String rightVal = "";
+		if(strVariables.checkSTforItem(left.expressionName)){
+			leftVal = strVariables.getValue(left.expressionName).getStringValue();
+		}else{
+			System.out.println("ERROR!: Right hand side variable " + left.expressionName + " Has not been initialized");
+		}
+		if(strVariables.checkSTforItem(right.expressionName)){
+			rightVal = strVariables.getValue(right.expressionName).getStringValue();
+		}else{
+			System.out.println("ERROR!: Right hand side variable " + right.expressionName + " Has not been initialized");
+		}
+		StrExpression tempExpr = new StrExpression(StrExpression.STRTEMPEXPR, createTempName(), leftVal + rightVal);
 		System.out.println("\tMOVL $0, %eax");
 		System.out.println("\tMOVL $0, %ebx");
 		System.out.println("LOOP1: ");
@@ -291,13 +308,13 @@ class CodeFactory {
 		System.out.println("\tMOVL $0, %ebx");
 		System.out.println("LOOP2: ");
 		System.out.println("\tCMPL $0, " + right.expressionName + "(%eax)");
-		System.out.println("\tJE DONE2");
+		System.out.println("\tJE BREAK");
 		System.out.println("\tMOVB " + right.expressionName + "(%eax), %cl");
 		System.out.println("\tMOVB %cl, " + tempExpr.expressionName + "(%ebx)");
 		System.out.println("\tINCL %ebx");
 		System.out.println("\tINCL %eax");
 		System.out.println("\tJMP LOOP2");
-		System.out.println("DONE2: ");
+		System.out.println("BREAK: ");
 		return tempExpr;
 			
 	}
