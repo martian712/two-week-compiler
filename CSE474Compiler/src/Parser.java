@@ -200,17 +200,12 @@ public class Parser
     	match(Token.SEMICOLON);
     }
     
-<<<<<<< HEAD
     private void intDeclaration(Expression leftSide){
     	Expression lValue = leftSide;
     	Expression expr = new Expression(Expression.LITERALEXPR, 0);
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
     	codeFactory.generateAssignment(lValue, expr);
     	match(Token.SEMICOLON);
-=======
-    private void strAssignment(Expression leftSide){
-    	
->>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler
     }
     
 	private void assignment() {
