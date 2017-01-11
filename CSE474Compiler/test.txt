@@ -1,0 +1,3 @@
+BEGIN
+STRING y:= "Hello";
+END
