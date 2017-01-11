@@ -114,11 +114,12 @@ public class Scanner
             i+=2;
         } else if(currentLine.charAt(i) == '"')				//Matching for StringLiterals
         {
+        	i++;
         	while(i < len && currentLine.charAt(i) != '"')
         	{
         		i++;
         	}
-        	if(currentLine.charAt(i) == '"')				//Making sure there is a closing "
+        	if(i < len && currentLine.charAt(i) == '"')				//Making sure there is a closing "
         	{
         		tokenStr = currentLine.substring(currentLocation + 1, i - 1);
         		tokenType = Token.STRINGLITERAL;
@@ -126,7 +127,7 @@ public class Scanner
         	}
         	else
         	{
-        		tokenStr = currentLine.substring(currentLocation, i);
+        		tokenStr = currentLine.substring(currentLocation, i - 1);
         		tokenType = Token.LexERROR;
         	}
         } 
