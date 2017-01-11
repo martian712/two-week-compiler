@@ -184,11 +184,8 @@ public class Parser
     	StrExpression expr;
     	match(Token.ASSIGNOP);
     	expr = strexpression();
-<<<<<<< HEAD
-=======
     	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
     	codeFactory.generateStrAssignment(lValue, expr);
->>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler.git
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
