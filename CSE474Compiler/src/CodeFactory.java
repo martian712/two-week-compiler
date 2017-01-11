@@ -251,7 +251,7 @@ class CodeFactory {
 		}
 	}
 	
-	void generateStrConcat(StrExpression left, StrExpression right){
+	StrExpression generateStrConcat(StrExpression left, StrExpression right){
 		
 	}
 
