@@ -250,6 +250,10 @@ class CodeFactory {
 			
 		}
 	}
+	
+	void generateStrConcat(StrExpression left, StrExpression right){
+		
+	}
 
 	void generateStart() {
 		System.out.println(".text\n.global _start\n\n_start:\n");
