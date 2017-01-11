@@ -109,8 +109,6 @@ public class Parser
     
     private void statement()
     {
-        Expression lValue;
-        Expression expr;
         
         switch ( currentToken.getType() )
         {
@@ -147,6 +145,7 @@ public class Parser
             }
             case Token.INT :
             {
+            	Expression lValue;
             	match( Token.INT);
             	lValue = identifier();
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <int_assignment>
@@ -162,8 +161,9 @@ public class Parser
             }
             case Token.STRING :
             {
+            	StrExpression lValue;
             	match( Token.STRING);
-            	lValue = identifier();
+            	lValue = stridentifier();
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <str_assignment>
             	{
             		strAssignment(lValue);
@@ -179,13 +179,14 @@ public class Parser
         }
     }
     
-    private void strAssignment(Expression leftSide){
-    	Expression lValue = leftSide;
+    private void strAssignment(StrExpression leftSide){
+    	StrExpression lValue = leftSide;
     	StrExpression expr;
     	match(Token.ASSIGNOP);
     	expr = strexpression();
     	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
     	codeFactory.generateStrAssignment(lValue, expr);
+    	match(Token.SEMICOLON);
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
@@ -205,8 +206,8 @@ public class Parser
     	match(Token.SEMICOLON);
     }
     
-    private void strDeclaration(Expression leftSide){
-    	Expression lValue = leftSide;
+    private void strDeclaration(StrExpression leftSide){
+    	StrExpression lValue = leftSide;
     	StrExpression expr = new StrExpression(StrExpression.STRLITERALEXPR, "", "");
     	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
     	codeFactory.generateStrAssignment(lValue, expr);
@@ -214,9 +215,9 @@ public class Parser
     }
     
 	private void assignment() {
-		Expression lValue;
 		if (symbolTable.checkSTforItem(currentToken.getId())) {
 			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
+				Expression lValue;
 				Expression expr;
 				lValue = identifier();
 				match(Token.ASSIGNOP);
@@ -225,8 +226,9 @@ public class Parser
 				codeFactory.generateAssignment(lValue, expr);
 				match(Token.SEMICOLON);
 			}else{
+				StrExpression lValue;
 				StrExpression expr;
-				lValue = identifier();
+				lValue = stridentifier();
 				match(Token.ASSIGNOP);
 				expr = strexpression();
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
@@ -482,7 +484,7 @@ public class Parser
     	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, previousToken.getId());
     	if ( ! symbolTable.checkSTforItem( previousToken.getId()))
     	{
-    		codeFactory.generateDeclaration(previousToken);
+    		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
     	}
     	return expr;
     }
