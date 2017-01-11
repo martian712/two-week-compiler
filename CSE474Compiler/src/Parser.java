@@ -164,8 +164,7 @@ public class Parser
             	}
             	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration>;
             	{
-            		//TODO int declaration
-            		match( Token.SEMICOLON);
+            		intDeclaration(lValue);
             		break;
             	}
             }
@@ -199,6 +198,10 @@ public class Parser
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
     	codeFactory.generateAssignment(lValue, expr);
     	match(Token.SEMICOLON);
+    }
+    
+    private void strAssignment(Expression leftSide){
+    	
     }
     
 	private void assignment() {

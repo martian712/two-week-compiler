@@ -1,11 +1,4 @@
 BEGIN
-INT x := 2;
+INT x;
 x := 5;
-x := 7;
-<<<<<<< HEAD
-x := 10;
-x := 123;
-END 
-=======
-END 
->>>>>>> refs/remotes/compiler/master
+END
