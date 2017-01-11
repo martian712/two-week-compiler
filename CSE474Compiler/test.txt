@@ -1,0 +1,5 @@
+BEGIN
+STRING y := "Hello";
+STRING x := "World";
+y := x;
+END
