@@ -116,7 +116,7 @@ public class Parser
         {
             case Token.ID:
             {
-            	/*
+            	
             	if(symbolTable.checkSTforItem(currentToken.getId()))
             	{
             		assignment();
@@ -125,13 +125,14 @@ public class Parser
             	{
             		error(currentToken);
             	}
-            	*/
-                lValue = identifier();
+            	
+                /* lValue = identifier();
                 match( Token.ASSIGNOP );
                 expr = expression();
                 codeFactory.generateAssignment( lValue, expr );
                 match( Token.SEMICOLON );
                 break;
+                */
             }
             case Token.READ :
             {
@@ -194,15 +195,21 @@ public class Parser
     }
     
 	private void assignment() {
+		Expression lValue;
+		Expression expr;
 		if (symbolTable.checkSTforItem(currentToken.getId())) {
 			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
-				//assign int value here
+				lValue = identifier();
+				match(Token.ASSIGNOP);
+				expr = expression();
+				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
+				codeFactory.generateAssignment(lValue, expr);
 			}else{
-				//assign String value here
+				match(Token.ID);
+				match(Token.ASSIGNOP);
+				expression();
 			}
 		} else {
-			Expression lValue;
-			Expression expr;
 			switch (previousToken.getType()) {
 			case Token.INT: {
 				// TODO assign a new int to symbol table
@@ -398,7 +405,7 @@ public class Parser
         
         if ( ! symbolTable.checkSTforItem( previousToken.getId() ) )
         {
-            symbolTable.addItem(previousToken.getId(), );
+            //symbolTable.addItem(previousToken.getId());
             codeFactory.generateDeclaration( previousToken );
         }
         return expr;
