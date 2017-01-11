@@ -377,6 +377,14 @@ public class Parser
         return expr;
     }
     
+    private StrExpression stridentifier()
+    {
+    	StrExpression expr;
+    	match(Token.ID);
+    	expr = processStrIdentifier();
+    	return expr;
+    }
+    
     private void match( int tokenType)
     {
     	if(tokenType == Token.END) {					//Removes need for extra lines past program. 
@@ -443,6 +451,17 @@ public class Parser
         }
         return expr;
     }
+    
+    private StrExpression processStrIdentifier()
+    {
+    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, previousToken.getId());
+    	if ( ! symbolTable.checkSTforItem( previousToken.getId()))
+    	{
+    		codeFactory.generateDeclaration(previousToken);
+    	}
+    	return expr;
+    }
+    
     private void error( Token token )
     {
         System.out.println( "Syntax error! Parsing token type " + token.toString() + " at line number " + 
