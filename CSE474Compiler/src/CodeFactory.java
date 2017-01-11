@@ -55,7 +55,6 @@ class CodeFactory {
 		}
 		}
 	}
-
 	private void generateAssemblyCodeForWriting(String idName) {
 		if (!firstWrite) {
 			
@@ -64,7 +63,14 @@ class CodeFactory {
 			System.out.println("\tcall __reversePrint    /* The return address is at top of stack! */");
 			System.out.println("\tpopl  %eax    /* Remove value pushed onto the stack */");
 			
-		} else
+		}else if(strVariables.checkSTforItem(idName)){
+			System.out.println("\tMOV $4, %eax");
+			System.out.println("\tMOV $1, %ebx");
+			System.out.println("$" + idName + ", %ecx");
+			System.out.println("$" + idName + "Len, %edx");
+			System.out.println("int $0x80");
+		}
+		else
 		// String reverseLoopLabel = generateLabel("reverseLoop");
 		{
 			firstWrite = false;
