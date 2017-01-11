@@ -4,24 +4,27 @@ import java.util.Vector;
 class SymbolTable
 {
         
-    private HashMap<String,Value> st;
+    private HashMap<String,Value> symTable;
     
     public SymbolTable()
     {
-        st = new HashMap<String,Value>();
+        symTable = new HashMap<String,Value>();
     }
     
+    public Value getValue(String key){
+    	return symTable.get(key);
+    }
     public void addItem(String key, int value){
-    	st.put(key, new Value(value));
+    	symTable.put(key, new Value(value));
     }
     
     public void addItem(String key, String value){
-    	st.put(key, new Value(value));
+    	symTable.put(key, new Value(value));
     }
     
     public boolean checkSTforItem( String key )
     {
-       return st.containsKey(key);
+       return symTable.containsKey(key);
     }
 
 }

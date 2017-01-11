@@ -195,7 +195,11 @@ public class Parser
     
 	private void assignment() {
 		if (symbolTable.checkSTforItem(currentToken.getId())) {
-			// TODO update entry in symbol table
+			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
+				//assign int value here
+			}else{
+				//assign String value here
+			}
 		} else {
 			Expression lValue;
 			Expression expr;
@@ -394,7 +398,7 @@ public class Parser
         
         if ( ! symbolTable.checkSTforItem( previousToken.getId() ) )
         {
-            symbolTable.addItem( previousToken );
+            symbolTable.addItem(previousToken.getId(), );
             codeFactory.generateDeclaration( previousToken );
         }
         return expr;
