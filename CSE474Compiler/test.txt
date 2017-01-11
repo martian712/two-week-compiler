@@ -2,4 +2,4 @@ BEGIN
 INT x := 5;
 x := 6;
 x := 7;
-END 
+END
