@@ -221,7 +221,7 @@ class CodeFactory {
 		System.out.println(readLoopEndLabel + ":\n");
 		System.out.println("\tcmpb $'-', __negFlag");
 		System.out.println("\tjne " + readEndLabel);
-		System.out.println("\tmovl a, %eax");
+		System.out.println("\tmovl " + readLoopEndLabel + ", %eax");
 		System.out.println("\tmull __negOne");
 		System.out.println("\tmovl %eax, a");
 		System.out.println("\tmovb $'+', __negFlag");
