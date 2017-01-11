@@ -114,6 +114,7 @@ public class Scanner
             i+=2;
         } else if(currentLine.charAt(i) == '"')				//Matching for StringLiterals
         {
+        	i++;
         	while(i < len && currentLine.charAt(i) != '"')
         	{
         		i++;
