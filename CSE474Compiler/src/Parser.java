@@ -290,16 +290,25 @@ public class Parser
     }
     
     private StrExpression strprimary(){
-    	Expression result = new Expression();
+    	StrExpression result = new StrExpression();
     	switch(currentToken.getType()){
     	case Token.ID:
-    		result = identifier();
+    		result = stridentifier();
     		break;
     	case Token.STRINGLITERAL:
     		match(Token.STRINGLITERAL);
-    		
+    		result = strprocessLiteral();
+    		break;
+    	case Token.PLUS:
+    		match(Token.PLUS);
+    		match(Token.STRINGLITERAL);
+    		result = strprocessLiteral();
+    		break;
+    	default:
+    		error(currentToken);
     		
     	}
+    	return result;
     }
     
     private StrExpression strexpression()
