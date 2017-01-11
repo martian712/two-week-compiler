@@ -204,6 +204,7 @@ public class Parser
 				expr = expression();
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
 				codeFactory.generateAssignment(lValue, expr);
+				match(Token.SEMICOLON);
 			}else{
 				match(Token.ID);
 				match(Token.ASSIGNOP);
@@ -216,6 +217,7 @@ public class Parser
 				lValue = identifier();
                 match( Token.ASSIGNOP );
                 expr = expression();
+                symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
                 codeFactory.generateAssignment( lValue, expr );	//TODO this may need to be moved to after the match (We don't want to add a symbol to the table if it is not a valid assignment statment?)
                 match( Token.SEMICOLON );
                 break;
