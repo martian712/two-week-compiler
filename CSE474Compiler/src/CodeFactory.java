@@ -3,6 +3,7 @@ import java.util.ArrayList;
 class CodeFactory {
 	private static int tempCount;
 	private static ArrayList<String> variablesList;
+	private static SymbolTable strVariables;
 	private static int labelCount = 0;
 	private static boolean firstWrite = true;
 
@@ -13,6 +14,10 @@ class CodeFactory {
 
 	void generateDeclaration(Token token) {
 		variablesList.add(token.getId());
+	}
+	
+	void generateStrDeclaration(StrExpression exp){
+		strVariables.addItem(exp.expressionName, exp.expressionStrValue);
 	}
 
 	Expression generateArithExpr(Expression left, Expression right, Operation op) {
