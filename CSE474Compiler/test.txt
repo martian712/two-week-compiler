@@ -1,7 +1,11 @@
 BEGIN
 <<<<<<< HEAD
+<<<<<<< HEAD
 STRING x := "Hello";
 =======
 STRING y := "Hello";
 >>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler.git
+=======
+STRING y := "Hello";
+>>>>>>> refs/remotes/compiler/master
 END
