@@ -6,7 +6,15 @@ class SymbolTable
         
     private HashMap<String,Value> symTable;
     
-    public SymbolTable()
+    public HashMap<String, Value> getSymTable() {
+		return symTable;
+	}
+
+	public void setSymTable(HashMap<String, Value> symTable) {
+		this.symTable = symTable;
+	}
+
+	public SymbolTable()
     {
         symTable = new HashMap<String,Value>();
     }

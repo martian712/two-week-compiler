@@ -307,6 +307,10 @@ class CodeFactory {
 	}
 	
 	public void generateStrData(){
+		for(Map.Entry<String, Value> entry : strVariables.getSymTable().entrySet())
+		{
+			
+		}
 	}
 
 	private String createTempName() {
