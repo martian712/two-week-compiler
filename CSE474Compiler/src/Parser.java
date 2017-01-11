@@ -158,10 +158,7 @@ public class Parser
             	lValue = identifier();
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment>;
             	{
-            		match( Token.ASSIGNOP );
-                    expr = expression();
-                    codeFactory.generateAssignment( lValue, expr );
-                    match( Token.SEMICOLON );
+            		intAssignment(lValue);
                     break;
             	}
             	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration>;
@@ -193,6 +190,15 @@ public class Parser
             default: error(currentToken);
         }
     }
+    private void intAssignment(Expression leftSide){
+    	Expression lValue = leftSide;
+    	Expression expr;
+    	match(Token.ASSIGNOP);
+    	expr = expression();
+    	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
+    	codeFactory.generateAssignment(lValue, expr);
+    	match(Token.SEMICOLON);
+    }
     
 	private void assignment() {
 		Expression lValue;
@@ -204,6 +210,7 @@ public class Parser
 				expr = expression();
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
 				codeFactory.generateAssignment(lValue, expr);
+				match(Token.SEMICOLON);
 			}else{
 				match(Token.ID);
 				match(Token.ASSIGNOP);

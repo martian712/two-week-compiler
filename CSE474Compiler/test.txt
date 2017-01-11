@@ -1,6 +1,6 @@
 BEGIN
 INT x := 5;
-x := 2;
-x := 8;
+x := 6;
+x := 7;
 END
 
