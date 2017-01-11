@@ -1,3 +1,4 @@
 BEGIN
 STRING y := "Hello";
+STRING x := "World";
 END

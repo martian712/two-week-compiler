@@ -254,7 +254,7 @@ class CodeFactory {
 		}
 	}
 	
-	void generateStrAssignment(Expression lValue, StrExpression expr){
+	void generateStrAssignment(StrExpression lValue, StrExpression expr){
 		if (expr.expressionType == StrExpression.STRLITERALEXPR) {
 			if(strVariables.checkSTforItem(lValue.expressionName)) {
 				strVariables.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
