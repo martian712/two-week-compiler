@@ -329,7 +329,7 @@ class CodeFactory {
 			String value = entry.getValue().getStringValue();
 			String name = entry.getKey();
 			System.out.println(name + ":\t.string " + "\"" + value + "\"");
-			System.out.println(":\t.equ " + name + "Len" + ", . - " + name);
+			System.out.println(".equ " + name + "Len" + ", . - " + name);
 		}
 	}
 
