@@ -17,9 +17,6 @@ class CodeFactory {
 		variablesList.add(token.getId());
 	}
 	
-	void generateStrDeclaration(StrExpression exp){
-		strVariables.addItem(exp.expressionName, exp.expressionStrValue);
-	}
 
 	Expression generateArithExpr(Expression left, Expression right, Operation op) {
 		Expression tempExpr = new Expression(Expression.TEMPEXPR, createTempName());
@@ -257,8 +254,22 @@ class CodeFactory {
 	}
 	
 	void generateStrAssignment(Expression lValue, StrExpression expr){
-		if (expr.expressionType == StrExpression.STRLITERALEXPR){
-			
+		if (expr.expressionType == StrExpression.STRLITERALEXPR) {
+			if(strVariables.checkSTforItem(lValue.expressionName)) {
+				strVariables.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
+			}
+			else
+			{
+				strVariables.addItem(lValue.expressionName, expr.expressionStrValue);
+			}
+		}
+		else {
+			if(strVariables.checkSTforItem(lValue.expressionName)) {
+				strVariables.getValue(lValue.expressionName).setValue(strVariables.getValue(expr.expressionStrValue).getStringValue());
+			}
+			else {
+				System.out.println("Syntax Error! Variable on right side not previously declared!");
+			}
 		}
 	}
 	
