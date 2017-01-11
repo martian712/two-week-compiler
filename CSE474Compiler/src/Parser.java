@@ -174,10 +174,7 @@ public class Parser
             	lValue = identifier();
             	if(currentToken.getType() == Token.ASSIGNOP)
             	{
-            		match( Token.ASSIGNOP);
-            		//TODO String expression
-            		//TODO String assignment
-            		match( Token.SEMICOLON);
+            		strAssignment(lValue);
             		break;
             	}
             	else if(currentToken.getType() == Token.SEMICOLON)
@@ -189,6 +186,11 @@ public class Parser
             }
             default: error(currentToken);
         }
+    }
+    
+    private void strAssignment(Expression leftSide){
+    	Expression lValue = leftSide;
+    	
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
