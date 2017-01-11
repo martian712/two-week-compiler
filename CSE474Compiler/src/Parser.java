@@ -126,14 +126,6 @@ public class Parser
             		error(currentToken);
             	}
             	break;
-            	
-                /* lValue = identifier();
-                match( Token.ASSIGNOP );
-                expr = expression();
-                codeFactory.generateAssignment( lValue, expr );
-                match( Token.SEMICOLON );
-                break;
-                */
             }
             case Token.READ :
             {
@@ -231,12 +223,11 @@ public class Parser
 		} else {
 			switch (previousToken.getType()) {
 			case Token.INT: {
-				// TODO assign a new int to symbol table
 				lValue = identifier();
                 match( Token.ASSIGNOP );
                 expr = expression();
                 symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
-                codeFactory.generateAssignment( lValue, expr );	//TODO this may need to be moved to after the match (We don't want to add a symbol to the table if it is not a valid assignment statment?)
+                codeFactory.generateAssignment( lValue, expr );	
                 match( Token.SEMICOLON );
                 break;
 
@@ -309,6 +300,24 @@ public class Parser
     		
     		
     	}
+    }
+    
+    private StrExpression strexpression()
+    {
+    	StrExpression result;
+    	StrExpression leftOperand;
+    	StrExpression rightOperand;
+    	Operation op;
+    	
+    	result = strprimary();
+    	while (currentToken.getType() == Token.PLUS)
+    	{
+    		leftOperand = result;
+    		op = addOperation();
+    		rightOperand = strprimary();
+    		result = codeFactory.generateStrConcat( leftOperand, rightOperand);		//TODO add the codefactory method for string concat
+    	}
+    	return result;
     }
     
     private Expression primary()
