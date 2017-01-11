@@ -171,8 +171,7 @@ public class Parser
             	}
             	else if(currentToken.getType() == Token.SEMICOLON)
             	{
-            		//TODO String declaration
-            		match( Token.SEMICOLON);
+            		strDeclaration(lValue);
             		break;
             	}
             }
@@ -185,6 +184,11 @@ public class Parser
     	StrExpression expr;
     	match(Token.ASSIGNOP);
     	expr = strexpression();
+<<<<<<< HEAD
+=======
+    	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
+    	codeFactory.generateStrAssignment(lValue, expr);
+>>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler.git
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
@@ -201,6 +205,14 @@ public class Parser
     	Expression expr = new Expression(Expression.LITERALEXPR, 0);
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
     	codeFactory.generateAssignment(lValue, expr);
+    	match(Token.SEMICOLON);
+    }
+    
+    private void strDeclaration(Expression leftSide){
+    	Expression lValue = leftSide;
+    	StrExpression expr = new StrExpression(StrExpression.STRLITERALEXPR, "", "");
+    	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
+    	codeFactory.generateStrAssignment(lValue, expr);
     	match(Token.SEMICOLON);
     }
     
