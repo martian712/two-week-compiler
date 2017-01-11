@@ -125,6 +125,7 @@ public class Parser
             	{
             		error(currentToken);
             	}
+            	break;
             	
                 /* lValue = identifier();
                 match( Token.ASSIGNOP );
