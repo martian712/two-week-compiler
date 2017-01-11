@@ -190,7 +190,9 @@ public class Parser
     
     private void strAssignment(Expression leftSide){
     	Expression lValue = leftSide;
-    	
+    	StrExpression expr;
+    	match(Token.ASSIGNOP);
+    	expr = expression();
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
@@ -294,6 +296,19 @@ public class Parser
             result = codeFactory.generateArithExpr( leftOperand, rightOperand, op );
         }
         return result;
+    }
+    
+    private StrExpression strprimary(){
+    	Expression result = new Expression();
+    	switch(currentToken.getType()){
+    	case Token.ID:
+    		result = identifier();
+    		break;
+    	case Token.STRINGLITERAL:
+    		match(Token.STRINGLITERAL);
+    		
+    		
+    	}
     }
     
     private Expression primary()
@@ -401,6 +416,11 @@ public class Parser
     		Parser.signFlag = "-";
     	}
     }
+    
+    private StrExpression strprocessLiteral(){
+    	return new StrExpression(StrExpression.STRLITERALEXPR, previousToken.getId(), previousToken.getId());
+    }
+    
     private Expression processLiteral()
     {
     	Expression expr;
