@@ -1,9 +1,8 @@
 BEGIN
 INT x;
-x := 5;
-<<<<<<< HEAD
-x := 7;
+INT y;
+y := 2;
+x := 4;
+y := y + x + 6 + 8 - 10;
+WRITE(y);
 END
-=======
-END
->>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler

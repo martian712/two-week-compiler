@@ -166,10 +166,7 @@ public class Parser
             	lValue = identifier();
             	if(currentToken.getType() == Token.ASSIGNOP)
             	{
-            		match( Token.ASSIGNOP);
-            		//TODO String expression
-            		//TODO String assignment
-            		match( Token.SEMICOLON);
+            		strAssignment(lValue);
             		break;
             	}
             	else if(currentToken.getType() == Token.SEMICOLON)
@@ -181,6 +178,13 @@ public class Parser
             }
             default: error(currentToken);
         }
+    }
+    
+    private void strAssignment(Expression leftSide){
+    	Expression lValue = leftSide;
+    	StrExpression expr;
+    	match(Token.ASSIGNOP);
+    	expr = expression();
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
@@ -283,6 +287,28 @@ public class Parser
             result = codeFactory.generateArithExpr( leftOperand, rightOperand, op );
         }
         return result;
+    }
+    
+    private StrExpression strprimary(){
+    	StrExpression result = new StrExpression();
+    	switch(currentToken.getType()){
+    	case Token.ID:
+    		result = stridentifier();
+    		break;
+    	case Token.STRINGLITERAL:
+    		match(Token.STRINGLITERAL);
+    		result = strprocessLiteral();
+    		break;
+    	case Token.PLUS:
+    		match(Token.PLUS);
+    		match(Token.STRINGLITERAL);
+    		result = strprocessLiteral();
+    		break;
+    	default:
+    		error(currentToken);
+    		
+    	}
+    	return result;
     }
     
     private StrExpression strexpression()
@@ -416,6 +442,11 @@ public class Parser
     		Parser.signFlag = "-";
     	}
     }
+    
+    private StrExpression strprocessLiteral(){
+    	return new StrExpression(StrExpression.STRLITERALEXPR, previousToken.getId(), previousToken.getId());
+    }
+    
     private Expression processLiteral()
     {
     	Expression expr;
