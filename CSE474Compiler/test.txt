@@ -1,3 +1,7 @@
 BEGIN
+<<<<<<< HEAD
 STRING x := "Hello";
+=======
+STRING y := "Hello";
+>>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler.git
 END
