@@ -27,28 +27,23 @@
  */
 
 /* Updated Grammar
-	<program>    		->	BEGIN <statement list> END
-	<statement list>	->  <statement> | <statement><statement list>
-	<statement>    		->  <assignment>;
-	<statement>     	->  <declaration>;
-	<statement>    		->  READ ( <variable list> ) ;
-	<statement>    		->  WRITE ( <expr list> ) ;
-	<assignment> 		->  <string assignment> | <int assignment>
-	<string_assignment> ->  <identifier> := <string>
-	<int_assignment> 	->  <identifier> := <integer> | <identifier> := <expression>
-	<identifier> 		->  STRING <name> | INT <name> | <variable>
-	<name> 				-> 	ID
-	<string> 			-> 	StringLiteral | <concatString>
-	<concatString> 		->  StringLiteral + <string>
-	<declaration> 		->  <identifier>
-	<integer> 			->  <digit> | <digit><integer>
-	<variable list> 	->  <variable> | <variable> <variable list>
-	<variable> 			->  <name>
-	<expr list> 		->  <expression> | <expression><expr list>
-	<expression> 		-> 	<factor><op><expression> | <factor>
-	<factor> 			-> 	(<expression>)
-	<factor> 			-> 	<variable> | <integer>
-	<op> 				-> 	+ | -
+	<system goal>       -> <program> #Finish
+	<program>        	-> BEGIN #Start <statement_list> END
+	<statement_list>    -> <statement> | <statement><statement_list>
+	<statement>        	-> READ( <id_list>);
+	<statement>        	-> WRITE( <expr_list> );
+	<statement>        	-> <declaration>
+	<statement>        	-> <assignment>
+	<declaration>       -> INT id; | STRING id;
+	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
+							id #processID := <expression> |
+							id #processID := <string_expression>
+	<int_assignment>    -> := <expression>;
+	<string_assignment> -> := <string_expression>;
+	<expression>        -> <primary> | <primary> <op> <primary>
+	<primary>        	-> id | IntLiteral | <op> IntLiteral | ( expression )
+	<str_expression>    -> <strprimary> | <strprimary> + <strprimary>
+	<strprimary>        -> id | StringLiteral | + StringLiteral
  */
 
 
