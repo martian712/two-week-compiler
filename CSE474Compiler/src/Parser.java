@@ -363,6 +363,14 @@ public class Parser
     
     private void match( int tokenType)
     {
+    	if(tokenType == Token.END) {					//Removes need for extra lines past program. 
+    		if(currentToken.getType() != tokenType) {	//If looking for END and doesn't see end, return an error but keep parsing
+    			error(tokenType);
+    		}
+    		else {										//If looking for END and find END, do not call findNextToken, break for program to end.
+    			return;
+    		}
+    	}
         previousToken = currentToken;
         if ( currentToken.getType() == tokenType )
             currentToken = scanner.findNextToken();
