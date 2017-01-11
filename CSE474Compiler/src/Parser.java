@@ -184,7 +184,7 @@ public class Parser
     	Expression lValue = leftSide;
     	StrExpression expr;
     	match(Token.ASSIGNOP);
-    	expr = expression();
+    	expr = strexpression();
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
