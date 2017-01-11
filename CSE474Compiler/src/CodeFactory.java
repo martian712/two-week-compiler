@@ -309,7 +309,10 @@ class CodeFactory {
 	public void generateStrData(){
 		for(Map.Entry<String, Value> entry : strVariables.getSymTable().entrySet())
 		{
-			
+			String value = entry.getValue().getStringValue();
+			String name = entry.getKey();
+			System.out.println(name + ":\t.string " + "\"" + value + "\"");
+			System.out.println(":\t.equ " + name + "Len" + ", . - " + name);
 		}
 	}
 
