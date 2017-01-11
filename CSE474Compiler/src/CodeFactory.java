@@ -252,7 +252,31 @@ class CodeFactory {
 	}
 	
 	StrExpression generateStrConcat(StrExpression left, StrExpression right){
-		
+		StrExpression tempExpr = new StrExpression(StrExpression.STRTEMPEXPR, createTempName(), left.expressionStrValue + right.expressionStrValue);
+		System.out.println("\tMOVL $0, %eax");
+		System.out.println("\tMOVL $0, %ebx");
+		System.out.println("LOOP1: ");
+		System.out.println("\tCMPL $0, " + left.expressionName + "(%eax)");
+		System.out.println("\tJE DONE1");
+		System.out.println("\tMOVB " + left.expressionName + "(%eax), %cl");
+		System.out.println("\tMOVB %cl, " + tempExpr.expressionName + "(%ebx)");
+		System.out.println("\tINCL %ebx");
+		System.out.println("\tINCL %eax");
+		System.out.println("\tJMP LOOP1");
+		System.out.println("DONE1: ");
+		System.out.println("\tMOVL $0, %eax");
+		System.out.println("\tMOVL $0, %ebx");
+		System.out.println("LOOP2: ");
+		System.out.println("\tCMPL $0, " + right.expressionName + "(%eax)");
+		System.out.println("\tJE DONE2");
+		System.out.println("\tMOVB " + right.expressionName + "(%eax), %cl");
+		System.out.println("\tMOVB %cl, " + tempExpr.expressionName + "(%ebx)");
+		System.out.println("\tINCL %ebx");
+		System.out.println("\tINCL %eax");
+		System.out.println("\tJMP LOOP2");
+		System.out.println("DONE2: ");
+		return tempExpr;
+			
 	}
 
 	void generateStart() {
