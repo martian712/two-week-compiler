@@ -231,8 +231,15 @@ public class Parser
 				lValue = stridentifier();
 				match(Token.ASSIGNOP);
 				expr = strexpression();
-				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
-				codeFactory.generateStrAssignment(lValue, expr);
+				if(expr.expressionType == StrExpression.STRIDEXPR) {
+					symbolTable.getValue(lValue.expressionName).setValue(
+							symbolTable.getValue(expr.expressionName).getStringValue());		//FLAG for possible problems
+					codeFactory.generateStrAssignment(lValue, new StrExpression(StrExpression.STRLITERALEXPR, expr.expressionName, symbolTable.getValue(expr.expressionName).getStringValue()));
+				}
+				else {
+					symbolTable.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
+					codeFactory.generateStrAssignment(lValue, expr);
+				}
 				match(Token.SEMICOLON);
 			}
 		} else {
