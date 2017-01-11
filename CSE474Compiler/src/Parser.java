@@ -117,7 +117,7 @@ public class Parser
             case Token.ID:
             {
             	
-            	if(symbolTable.checkSTforItem(currentToken.getId()))
+            	if(symbolTable.checkSTforItem(currentToken.getId()))	//<statment> -> <assignment> but where the id in assignment already exists
             	{
             		assignment();
             	}
@@ -149,12 +149,12 @@ public class Parser
             {
             	match( Token.INT);
             	lValue = identifier();
-            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment>;
+            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <int_assignment>
             	{
             		intAssignment(lValue);
                     break;
             	}
-            	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration>;
+            	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration> then <declaration> -> <int_declaration>;
             	{
             		intDeclaration(lValue);
             		break;
@@ -164,12 +164,12 @@ public class Parser
             {
             	match( Token.STRING);
             	lValue = identifier();
-            	if(currentToken.getType() == Token.ASSIGNOP)
+            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <str_assignment>
             	{
             		strAssignment(lValue);
             		break;
             	}
-            	else if(currentToken.getType() == Token.SEMICOLON)
+            	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration> then <declaration> -> <str_declaration>;
             	{
             		strDeclaration(lValue);
             		break;
@@ -215,9 +215,9 @@ public class Parser
     
 	private void assignment() {
 		Expression lValue;
-		Expression expr;
 		if (symbolTable.checkSTforItem(currentToken.getId())) {
 			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
+				Expression expr;
 				lValue = identifier();
 				match(Token.ASSIGNOP);
 				expr = expression();
@@ -225,32 +225,17 @@ public class Parser
 				codeFactory.generateAssignment(lValue, expr);
 				match(Token.SEMICOLON);
 			}else{
-				match(Token.ID);
+				StrExpression expr;
+				lValue = identifier();
 				match(Token.ASSIGNOP);
-				expression();
+				expr = strexpression();
+				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionStrValue);
+				codeFactory.generateStrAssignment(lValue, expr);
+				match(Token.SEMICOLON);
 			}
 		} else {
-			switch (previousToken.getType()) {
-			case Token.INT: {
-				lValue = identifier();
-                match( Token.ASSIGNOP );
-                expr = expression();
-                symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
-                codeFactory.generateAssignment( lValue, expr );	
-                match( Token.SEMICOLON );
-                break;
-
-			}
-			case Token.STRING: {
-				// TODO assign a new string to symbol table
-				lValue = identifier();
-                match( Token.ASSIGNOP );
-                expr = expression();							//TODO this needs to be different for strings somehow! string() - <string> -> StringLiteral | StringLiteral + <string>
-                codeFactory.generateAssignment( lValue, expr );	//TODO same todo as the one in the Token.INT case above
-                match( Token.SEMICOLON );
-                break;
-			}
-			}
+			error(currentToken, "ID seen at beginning of statement, but variable has not been declared!");		//statment started with an ID but was this var was not previously declared
+			
 		}
 	}
     
@@ -502,6 +487,12 @@ public class Parser
     	return expr;
     }
     
+    private void error(Token token, String str) {
+    	System.out.println( "Syntax error! Parsing token type " + token.toString() + " at line number " + 
+                scanner.getLineNumber() );
+    	System.out.println("Extra error message: " + str);
+    }
+    
     private void error( Token token )
     {
         System.out.println( "Syntax error! Parsing token type " + token.toString() + " at line number " + 
@@ -509,6 +500,7 @@ public class Parser
         if (token.getType() == Token.ID )
             System.out.println( "ID name: " + token.getId() );
     }
+    
     private void error( int tokenType )
     {
         System.out.println( "Syntax error! Parsing token type " +tokenType + " at line number " + 
