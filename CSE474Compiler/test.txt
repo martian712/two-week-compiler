@@ -1,6 +1,7 @@
 BEGIN
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 STRING x := "Hello";
 =======
 STRING y := "Hello";
@@ -8,4 +9,7 @@ STRING y := "Hello";
 =======
 STRING y := "Hello";
 >>>>>>> refs/remotes/compiler/master
+=======
+STRING y := "Hello";
+>>>>>>> branch 'master' of https://github.com/martian712/two-week-compiler.git
 END
