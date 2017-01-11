@@ -69,8 +69,7 @@ class CodeFactory {
 			System.out.println("$" + idName + ", %ecx");
 			System.out.println("$" + idName + "Len, %edx");
 			System.out.println("int $0x80");
-		}
-		else
+		}else
 		// String reverseLoopLabel = generateLabel("reverseLoop");
 		{
 			firstWrite = false;
