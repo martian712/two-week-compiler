@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Map;
 
 class CodeFactory {
 	private static int tempCount;
@@ -302,6 +303,10 @@ class CodeFactory {
 		System.out.println("__minus:  .byte '-'");
 		System.out.println("__negOne: .int -1");
 		System.out.println("__negFlag: .byte '+'");
+		generateStrData();
+	}
+	
+	public void generateStrData(){
 	}
 
 	private String createTempName() {
