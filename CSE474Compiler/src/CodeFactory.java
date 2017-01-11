@@ -11,6 +11,7 @@ class CodeFactory {
 	public CodeFactory() {
 		tempCount = 0;
 		variablesList = new ArrayList<String>();
+		strVariables = new SymbolTable();
 	}
 
 	void generateDeclaration(Token token) {

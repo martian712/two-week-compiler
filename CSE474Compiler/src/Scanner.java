@@ -121,13 +121,13 @@ public class Scanner
         	}
         	if(i < len && currentLine.charAt(i) == '"')				//Making sure there is a closing "
         	{
-        		tokenStr = currentLine.substring(currentLocation + 1, i - 1);
+        		tokenStr = currentLine.substring(currentLocation + 1, i);
         		tokenType = Token.STRINGLITERAL;
         		i++;
         	}
         	else
         	{
-        		tokenStr = currentLine.substring(currentLocation, i - 1);
+        		tokenStr = currentLine.substring(currentLocation, i);
         		tokenType = Token.LexERROR;
         	}
         } 
