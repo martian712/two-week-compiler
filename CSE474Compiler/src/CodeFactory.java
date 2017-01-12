@@ -254,6 +254,7 @@ class CodeFactory {
 
 	}
 
+
 	void generateAssignment(Expression lValue, Expression expr) {
 		if (expr.expressionType == Expression.LITERALEXPR) {
 			System.out.println("\tMOVL " + "$" + expr.expressionIntValue + ", %eax");

@@ -192,8 +192,8 @@ public class Parser
     	Expression expr;
     	match(Token.LOGASSIGNOP);
     	expr = logexpression();
-    	//TODO symbol table update --  I think it's the same as the int assignment one?
-    	//TODO code factory generation for logic
+    	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
+    	codeFactory.generateAssignment(lValue, expr);
     	match(Token.SEMICOLON);
     }
     private void strAssignment(StrExpression leftSide){
