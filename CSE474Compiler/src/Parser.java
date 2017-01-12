@@ -236,7 +236,7 @@ public class Parser
 			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
 				Expression lValue;
 				Expression expr;
-				lValue = identifier();		//TODO Logical assignment check goes here
+				lValue = identifier();		
 				if(currentToken.getType() == Token.ASSIGNOP) {
 					match(Token.ASSIGNOP);
 					expr = expression();
