@@ -127,7 +127,13 @@ public class Scanner
             tokenStr = ":=";
             tokenType = Token.ASSIGNOP;
             i+=2;
-        } else if(currentLine.charAt(i) == '"')				//Matching for StringLiterals
+        } else if (currentLine.charAt(i) == '~' && i+1 < len && currentLine.charAt(i+1) == '=')
+        {
+        	tokenStr = "~=";
+        	tokenType = Token.LOGASSIGNOP;
+        	i+=2;
+        }
+        else if(currentLine.charAt(i) == '"')				//Matching for StringLiterals
         {
         	i++;
         	while(i < len && currentLine.charAt(i) != '"')

@@ -28,6 +28,7 @@ public class Token
     public final static int AND = 21;
     public final static int OR = 22;
     public final static int NOT = 23;
+    public final static int LOGASSIGNOP = 24;
 
     public Token( String tokenString, int tokenType)
     {
