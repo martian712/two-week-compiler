@@ -41,7 +41,7 @@
 	<int_assignment>    -> := <expression>;
 	<string_assignment> -> := <string_expression>;
 	<expression>        -> <factor> <addop> <expression> | <factor> | <logexpression>
-	<logexpression>    	-> <primary> OR <logexpression> | <logfactor>
+	<logexpression>    	-> <logfactor> OR <logexpression> | <logfactor>
 	<logfactor>        	-> <primary> AND <logfactor> | <logterm>
 	<logterm>        	-> NOT <primary> | <primary>
 	<factor>        	-> <primary> <multop> <factor> | <primary>
@@ -301,7 +301,7 @@ public class Parser
     	Operation op;
     	
     	result = primary();
-    	while(currentToken.getType() == Token.MULT || currentToken.getType() == Token.DIV){
+    	while(currentToken.getType() == Token.MULT || currentToken.getType() == Token.DIV || currentToken.getType() == Token.MOD){
     		
     		leftOperand = result;
     		op = multOperation();
