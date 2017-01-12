@@ -24,6 +24,9 @@ public class Token
     public final static int STRINGLITERAL = 17;
     public final static int MULT = 18;
     public final static int DIV = 19;
+    public final static int AND = 20;
+    public final static int OR = 21;
+    public final static int NOT = 22;
 
     public Token( String tokenString, int tokenType)
     {
@@ -38,6 +41,9 @@ public class Token
             else if ( temp.compareTo("write") == 0) type = WRITE;
             else if ( temp.compareTo("int") == 0) type = INT;
             else if ( temp.compareTo("string") == 0) type = STRING;
+            else if ( temp.compareTo("and") == 0) type = AND;
+            else if ( temp.compareTo("or") == 0) type = OR;
+            else if ( temp.compareTo("not") == 0) type = NOT;
         }
     }
     public String getId()
