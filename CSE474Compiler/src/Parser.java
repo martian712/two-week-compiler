@@ -38,7 +38,8 @@
 	<assignment>       	-> INT id <int_assignment> | STRING id <string_assignment> |
                 			INT id <logic_assignment> |
 							id #processID := <expression> |
-							id #processID := <string_expression>
+							id #processID := <string_expression> |
+							id #processID ~= <logexpression>
 	<int_assignment>    -> := <expression>;
 	<string_assignment> -> := <string_expression>;
 	<logic_assignment>  -> ~= <logexpression>;
@@ -151,7 +152,7 @@ public class Parser
             	Expression lValue;
             	match( Token.INT);
             	lValue = identifier();
-            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <int_assignment>
+            	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> INT id<int_assignment>;
             	{
             		intAssignment(lValue);
                     break;
@@ -159,6 +160,11 @@ public class Parser
             	else if(currentToken.getType() == Token.SEMICOLON)	//<statement> -> <declaration> then <declaration> -> <int_declaration>;
             	{
             		intDeclaration(lValue);
+            		break;
+            	}
+            	else if(currentToken.getType() == Token.LOGASSIGNOP) //<statement> -> <assignment> then <assignement> -> INT id <log_assignement>;
+            	{
+            		logAssignment(lValue);
             		break;
             	}
             }
@@ -181,7 +187,15 @@ public class Parser
             default: error(currentToken);
         }
     }
-    
+    private void logAssignment(Expression leftSide) {
+    	Expression lValue = leftSide;
+    	Expression expr;
+    	match(Token.LOGASSIGNOP);
+    	expr = logexpression();
+    	//TODO symbol table update --  I think it's the same as the int assignment one?
+    	//TODO code factory generation for logic
+    	match(Token.SEMICOLON);
+    }
     private void strAssignment(StrExpression leftSide){
     	StrExpression lValue = leftSide;
     	StrExpression expr;
@@ -222,7 +236,7 @@ public class Parser
 			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
 				Expression lValue;
 				Expression expr;
-				lValue = identifier();
+				lValue = identifier();		//TODO Logical assignment check goes here
 				match(Token.ASSIGNOP);
 				expr = expression();
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
@@ -295,6 +309,11 @@ public class Parser
         return result;
     }
     
+    private Expression logexpression()
+    {
+    	
+    }
+    
     private Expression factor()
     {
     	Expression result;
@@ -314,7 +333,15 @@ public class Parser
     	return result;
     }
     
-    private StrExpression strprimary(){
+    private Expression logfactor() {
+    	
+    }
+    
+    private Expression logterm() {
+    	
+    }
+    
+    private StrExpression strprimary() {
     	StrExpression result = new StrExpression();
     	switch(currentToken.getType()){
     	case Token.ID:
