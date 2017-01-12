@@ -44,6 +44,7 @@ public class Token
             else if ( temp.compareTo("and") == 0) type = AND;
             else if ( temp.compareTo("or") == 0) type = OR;
             else if ( temp.compareTo("not") == 0) type = NOT;
+            
         }
     }
     public String getId()
