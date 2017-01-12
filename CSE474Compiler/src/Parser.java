@@ -425,11 +425,15 @@ public class Parser
     	{
     	case Token.MULT:
     	{
-    		
+    		match(Token.MULT);
+    		op = processOperation();
+    		break;
     	}
     	case Token.DIV:
     	{
-    		
+    		match(Token.DIV);
+    		op = processOperation();
+    		break;
     	}
     	default: error(currentToken);
     	}
@@ -508,6 +512,8 @@ public class Parser
         Operation op = new Operation();
         if ( previousToken.getType() == Token.PLUS ) op.opType = Token.PLUS;
         else if ( previousToken.getType() == Token.MINUS ) op.opType = Token.MINUS;
+        else if ( previousToken.getType() == Token.MULT) op.opType = Token.MULT;
+        else if ( previousToken.getType() == Token.DIV) op.opType = Token.DIV;
         else error( previousToken );
         return op;
     }
