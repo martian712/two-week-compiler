@@ -435,6 +435,12 @@ public class Parser
     		op = processOperation();
     		break;
     	}
+    	case Token.MOD:
+    	{
+    		match(Token.MOD);
+    		op = processOperation();
+    		break;
+    	}
     	default: error(currentToken);
     	}
     	return op;
@@ -514,6 +520,7 @@ public class Parser
         else if ( previousToken.getType() == Token.MINUS ) op.opType = Token.MINUS;
         else if ( previousToken.getType() == Token.MULT) op.opType = Token.MULT;
         else if ( previousToken.getType() == Token.DIV) op.opType = Token.DIV;
+        else if ( previousToken.getType() == Token.MOD) op.opType = Token.MOD;
         else error( previousToken );
         return op;
     }
