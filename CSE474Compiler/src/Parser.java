@@ -497,6 +497,21 @@ public class Parser
         }
         return op;
     }
+    private Operation andOperation(){
+    	
+    	Operation op = new Operation();
+    	match(Token.AND);
+    	op = processOperation();
+    	return op;
+    	
+    }
+    
+    private Operation orOperation(){
+    	Operation op = new Operation();
+    	match(Token.OR);
+    	op = processOperation();
+    	return op;
+    }
     
     private Operation multOperation() 
     {
