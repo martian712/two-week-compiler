@@ -366,7 +366,7 @@ public class Parser
     		leftOperand = result;
     		op = orOperation();
     		rightOperand = logfactor();
-    		//codefactory stuff
+    		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
     	}
     	return result;
     }
