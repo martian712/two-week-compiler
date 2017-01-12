@@ -237,8 +237,18 @@ public class Parser
 				Expression lValue;
 				Expression expr;
 				lValue = identifier();		//TODO Logical assignment check goes here
-				match(Token.ASSIGNOP);
-				expr = expression();
+				if(currentToken.getType() == Token.ASSIGNOP) {
+					match(Token.ASSIGNOP);
+					expr = expression();
+				}
+				else if(currentToken.getType() == Token.LOGASSIGNOP) {
+					match(Token.LOGASSIGNOP);
+					expr = logexpression();
+				}
+				else {
+					error(currentToken, "Incorrect Assignment Operator for an INT type on the left. Use \":=\" or \"~=\" for int assignments and logic assignments respectively.");
+					return;
+				}
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
 				codeFactory.generateAssignment(lValue, expr);
 				match(Token.SEMICOLON);
@@ -427,7 +437,7 @@ public class Parser
     		leftOperand = result;
     		op = addOperation();
     		rightOperand = strprimary();
-    		result = codeFactory.generateStrConcat( leftOperand, rightOperand);		//TODO add the codefactory method for string concat
+    		result = codeFactory.generateStrConcat( leftOperand, rightOperand);	
     	}
     	return result;
     }
