@@ -282,12 +282,12 @@ public class Parser
         Expression rightOperand;
         Operation op;
         
-        result = primary();
+        result = factor();
         while ( currentToken.getType() == Token.PLUS || currentToken.getType() == Token.MINUS )
         {
             leftOperand = result;
             op = addOperation();
-            rightOperand = primary();
+            rightOperand = expression();
             result = codeFactory.generateArithExpr( leftOperand, rightOperand, op );
         }
         return result;
@@ -300,6 +300,14 @@ public class Parser
     	Expression rightOperand;
     	Operation op;
     	
+    	result = primary();
+    	while(currentToken.getType() == Token.MULT || currentToken.getType() == Token.DIV){
+    		
+    		leftOperand = result;
+    		op = multOperation();
+    		rightOperand = factor();
+    		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
+    	}
     	
     	return result;
     }
