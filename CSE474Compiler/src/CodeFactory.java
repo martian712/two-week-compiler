@@ -339,7 +339,7 @@ class CodeFactory {
 	}
 
 	private String createTempName() {
-		String tempVar = new String("temp" + tempCount++);
+		String tempVar = new String("__temp" + tempCount++);
 		variablesList.add(tempVar);
 		return tempVar;
 	}
