@@ -362,7 +362,20 @@ public class Parser
     }
     
     private Expression logterm() {
+    	Expression result;
     	
+    	if(currentToken.getType() == Token.NOT) {
+    		match(Token.NOT);
+    		result = primary();
+    		if(result.expressionIntValue == 0)
+    			result.expressionIntValue = 1;
+    		else
+    			result.expressionIntValue = 0;
+    	}
+    	else {
+    		result = primary();
+    	}
+    	return result;
     }
     
     private StrExpression strprimary() {
