@@ -112,6 +112,11 @@ public class Scanner
         	tokenStr = "/";
         	tokenType = Token.DIV;
         	i++;
+        } else if(currentLine.charAt(i) == '%')
+        {
+        	tokenStr = "%";
+        	tokenType = Token.MOD;
+        	i++;
         }else if(currentLine.charAt(i) == ',')
         {
             tokenStr = ",";
