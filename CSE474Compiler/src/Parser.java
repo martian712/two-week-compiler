@@ -321,7 +321,7 @@ public class Parser
     		leftOperand = result;
     		op = andOperation();
     		rightOperand = logexpression();
-    		//TODO codefactory
+    		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
     	}
     	return result;
     }
@@ -427,7 +427,7 @@ public class Parser
     		leftOperand = result;
     		op = addOperation();
     		rightOperand = strprimary();
-    		result = codeFactory.generateStrConcat( leftOperand, rightOperand);		//TODO add the codefactory method for string concat
+    		result = codeFactory.generateStrConcat( leftOperand, rightOperand);
     	}
     	return result;
     }

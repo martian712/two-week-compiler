@@ -18,8 +18,10 @@ class CodeFactory {
 		variablesList.add(token.getId());
 	}
 	
-
 	Expression generateArithExpr(Expression left, Expression right, Operation op) {
+		String falseLable = generateLabel("__false");
+		String trueLable = generateLabel("__true");
+		String cont = generateLabel("__cont");
 		Expression tempExpr = new Expression(Expression.TEMPEXPR, createTempName());
 		if (right.expressionType == Expression.LITERALEXPR) {
 			System.out.println("\tMOVL " + "$" + right.expressionName + ", %ebx");
@@ -46,6 +48,35 @@ class CodeFactory {
 			System.out.println("\tIDIV %ebx");
 			System.out.println("\tMOVL %edx, " + tempExpr.expressionName);
 			return tempExpr;
+		}else if(op.opType == Token.AND){
+			System.out.println("\tCMPL $0, %eax");
+			System.out.println("\tJE " + falseLable);
+			System.out.println("\tCMPL $0, %ebx");
+			System.out.println("\tJE " + falseLable);
+			System.out.println("\tJNE " + trueLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+		}else if(op.opType == Token.OR){
+			System.out.println("\tCMPL $0, %eax");
+			System.out.println("\tJNE " + trueLable);
+			System.out.println("\tCMPL $0, %ebx");
+			System.out.println("\tJNE " + trueLable);
+			System.out.println("\tJE " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
 		}
 		System.out.println("\tMOVL " + "%eax, " + tempExpr.expressionName);
 		return tempExpr;
