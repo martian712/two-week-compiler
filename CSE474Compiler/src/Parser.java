@@ -36,16 +36,18 @@
 	<statement>        	-> <assignment>
 	<declaration>      	-> INT id; | STRING id;
 	<assignment>       	-> INT id <int_assignment> | STRING id <string_assignment> |
+                			INT id <logic_assignment> |
 							id #processID := <expression> |
 							id #processID := <string_expression>
 	<int_assignment>    -> := <expression>;
 	<string_assignment> -> := <string_expression>;
-	<expression>        -> <factor> <addop> <expression> | <factor> | <logexpression>
+	<logic_assignment>  -> ~= <logexpression>;
+	<expression>        -> <factor> <addop> <expression> | <factor> 
 	<logexpression>    	-> <logfactor> OR <logexpression> | <logfactor>
 	<logfactor>        	-> <primary> AND <logfactor> | <logterm>
 	<logterm>        	-> NOT <primary> | <primary>
 	<factor>        	-> <primary> <multop> <factor> | <primary>
-	<primary>        	-> id | IntLiteral | - IntLiteral | ( expression )
+	<primary>        	-> id | IntLiteral | - IntLiteral | ( <expression> ) | ( <logexpression> )
 	<str_expression>    -> <strprimary> | <strprimary> + <strprimary>
 	<strprimary>        -> id | StringLiteral | + StringLiteral
 	<addop>        		-> + | -
