@@ -311,7 +311,19 @@ public class Parser
     
     private Expression logexpression()
     {
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
     	
+    	result = logfactor();
+    	while ( currentToken.getType() == Token.AND) {
+    		leftOperand = result;
+    		op = andOperation();
+    		rightOperand = logexpression();
+    		//TODO codefactory
+    	}
+    	return result;
     }
     
     private Expression factor()
@@ -334,7 +346,19 @@ public class Parser
     }
     
     private Expression logfactor() {
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
     	
+    	result = logterm();
+    	while(currentToken.getType() == Token.OR) {
+    		leftOperand = result;
+    		op = orOperation();
+    		rightOperand = logfactor();
+    		//codefactory stuff
+    	}
+    	return result;
     }
     
     private Expression logterm() {
