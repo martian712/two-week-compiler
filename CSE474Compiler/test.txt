@@ -1,6 +1,5 @@
 BEGIN
-STRING x:= "Hello";
-STRING y:= "World";
-STRING z;
-z := x+y;
+STRING x:= "World";
+STRING y:= "Hello";
+y:= x;
 END
