@@ -24,9 +24,10 @@ public class Token
     public final static int STRINGLITERAL = 17;
     public final static int MULT = 18;
     public final static int DIV = 19;
-    public final static int AND = 20;
-    public final static int OR = 21;
-    public final static int NOT = 22;
+    public final static int MOD = 20;
+    public final static int AND = 21;
+    public final static int OR = 22;
+    public final static int NOT = 23;
 
     public Token( String tokenString, int tokenType)
     {
