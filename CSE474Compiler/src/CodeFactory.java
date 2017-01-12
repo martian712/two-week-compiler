@@ -36,6 +36,11 @@ class CodeFactory {
 			
 		} else if (op.opType == Token.MINUS) {
 			System.out.println("\tSUB %ebx, %eax");
+		}else if (op.opType == Token.MULT){
+			System.out.println("\tIMULL %ebx");
+		}else if (op.opType == Token.DIV){
+			System.out.println("\tXORL %edx, %edx");
+			System.out.println("\tIDIV %ebx");
 		}
 		System.out.println("\tMOVL " + "%eax, " + tempExpr.expressionName);
 		return tempExpr;
