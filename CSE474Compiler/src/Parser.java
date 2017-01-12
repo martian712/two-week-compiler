@@ -438,7 +438,6 @@ public class Parser
     		op = addOperation();
     		rightOperand = strprimary();
     		result = codeFactory.generateStrConcat( leftOperand, rightOperand);	
-
     	}
     	return result;
     }
