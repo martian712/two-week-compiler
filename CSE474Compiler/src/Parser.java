@@ -367,6 +367,20 @@ public class Parser
     	if(currentToken.getType() == Token.NOT) {
     		match(Token.NOT);
     		result = primary();
+    		if(result.expressionType == Expression.IDEXPR) {
+    			if(symbolTable.checkSTforItem(result.expressionName)) {
+    				if(symbolTable.getValue(result.expressionName).getIntValue() == 0) {
+    					symbolTable.getValue(result.expressionName).setValue(1);
+    					result.expressionIntValue = 1;
+    				}
+    				else {
+    					symbolTable.getValue(result.expressionName).setValue(0);
+    					result.expressionIntValue = 0;
+    				}
+    			}
+    			else
+    				error(currentToken, "Variable used in logic expression not defined?");
+    		}
     		if(result.expressionIntValue == 0)
     			result.expressionIntValue = 1;
     		else
