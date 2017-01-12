@@ -34,13 +34,18 @@ class CodeFactory {
 		if (op.opType == Token.PLUS) {
 			System.out.println("\tADD %ebx, %eax");
 			
-		} else if (op.opType == Token.MINUS) {
+		}else if (op.opType == Token.MINUS) {
 			System.out.println("\tSUB %ebx, %eax");
 		}else if (op.opType == Token.MULT){
 			System.out.println("\tIMULL %ebx");
 		}else if (op.opType == Token.DIV){
 			System.out.println("\tXORL %edx, %edx");
 			System.out.println("\tIDIV %ebx");
+		}else if (op.opType == Token.MOD){
+			System.out.println("\tXORL %edx, %edx");
+			System.out.println("\tIDIV %ebx");
+			System.out.println("\tMOVL %edx, " + tempExpr.expressionName);
+			return tempExpr;
 		}
 		System.out.println("\tMOVL " + "%eax, " + tempExpr.expressionName);
 		return tempExpr;
