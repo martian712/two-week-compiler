@@ -27,29 +27,29 @@
  */
 
 /* Updated Phase 2 grammar (us)
-	<system goal>        -> <program> #Finish
-	<program>        -> BEGIN #Start <statement_list> END
-	<statement_list>    -> <statement> | <statement><statement_list>
-	<statement>        -> READ( <id_list>);
-	<statement>        -> WRITE( <expr_list> );
-	<statement>        -> <declaration>
-	<statement>        -> <assignment>
-	<declaration>        -> INT id; | STRING id;
-	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
-	id #processID := <expression> |
-	id #processID := <string_expression>
+	<system goal>       -> <program> #Finish
+	<program>        	-> BEGIN #Start <statement_list> END
+	<statement_list>   	-> <statement> | <statement><statement_list>
+	<statement>        	-> READ( <id_list>);
+	<statement>        	-> WRITE( <expr_list> );
+	<statement>        	-> <declaration>
+	<statement>        	-> <assignment>
+	<declaration>      	-> INT id; | STRING id;
+	<assignment>       	-> INT id <int_assignment> | STRING id <string_assignment> |
+							id #processID := <expression> |
+							id #processID := <string_expression>
 	<int_assignment>    -> := <expression>;
-	<string_assignment>    -> := <string_expression>;
+	<string_assignment> -> := <string_expression>;
 	<expression>        -> <factor> <addop> <expression> | <factor> | <logexpression>
-	<logexpression>    -> <primary> OR <logexpression> | <logfactor>
-	<logfactor>        -> <primary> AND <logfactor> | <logterm>
-	<logterm>        -> NOT <primary> | <primary>
-	<factor>        -> <primary> <multop> <factor> | <primary>
-	<primary>        -> id | IntLiteral | - IntLiteral | ( expression )
+	<logexpression>    	-> <primary> OR <logexpression> | <logfactor>
+	<logfactor>        	-> <primary> AND <logfactor> | <logterm>
+	<logterm>        	-> NOT <primary> | <primary>
+	<factor>        	-> <primary> <multop> <factor> | <primary>
+	<primary>        	-> id | IntLiteral | - IntLiteral | ( expression )
 	<str_expression>    -> <strprimary> | <strprimary> + <strprimary>
 	<strprimary>        -> id | StringLiteral | + StringLiteral
-	<addop>        -> + | -
-	<multop>        -> * | / | %
+	<addop>        		-> + | -
+	<multop>        	-> * | / | %
  */
 
 
