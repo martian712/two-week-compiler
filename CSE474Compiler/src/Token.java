@@ -22,6 +22,8 @@ public class Token
     public final static int INT = 15;
     public final static int STRING = 16;
     public final static int STRINGLITERAL = 17;
+    public final static int MULT = 18;
+    public final static int DIV = 19;
 
     public Token( String tokenString, int tokenType)
     {

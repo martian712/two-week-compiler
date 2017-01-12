@@ -102,7 +102,17 @@ public class Scanner
             tokenStr = "-";
             tokenType = Token.MINUS;
             i++;
-        } else if(currentLine.charAt(i) == ',')
+        } else if(currentLine.charAt(i) == '*')
+        {
+        	tokenStr = "*";
+        	tokenType = Token.MULT;
+        	i++;
+        } else if(currentLine.charAt(i) == '/')
+        {
+        	tokenStr = "/";
+        	tokenType = Token.DIV;
+        	i++;
+        }else if(currentLine.charAt(i) == ',')
         {
             tokenStr = ",";
             tokenType = Token.COMMA;

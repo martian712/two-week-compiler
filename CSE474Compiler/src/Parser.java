@@ -293,7 +293,16 @@ public class Parser
         return result;
     }
     
-    
+    private Expression factor()
+    {
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
+    	
+    	
+    	return result;
+    }
     
     private StrExpression strprimary(){
     	StrExpression result = new StrExpression();
@@ -399,6 +408,24 @@ public class Parser
             default: error( currentToken );
         }
         return op;
+    }
+    
+    private Operation multOperation() 
+    {
+    	Operation op = new Operation();
+    	switch (currentToken.getType())
+    	{
+    	case Token.MULT:
+    	{
+    		
+    	}
+    	case Token.DIV:
+    	{
+    		
+    	}
+    	default: error(currentToken);
+    	}
+    	return op;
     }
     
     private Expression identifier()
