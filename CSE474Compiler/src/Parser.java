@@ -4,10 +4,10 @@
 /* 	Java version of the Micro compiler from Chapter 2 of "Crafting a Compiler" --
 *	for distribution to instructors 
 *	Converted to Java by James Kiper in July 2003.
-*
+*	Further work and completion done by Nic Larson and Brandon Langmeier
 */
 
-/* Original Micro grammar
+/* Original Micro grammar (Dr. Kiper)
    <program>	    -> #Start BEGIN <statement list> END
    <statement list> -> <statement> {<statement>}
    <statement>	    -> <ident> := <expression> #Assign ;
@@ -26,24 +26,30 @@
    <system goal>    -> <program> EofSym #Finish
  */
 
-/* Updated Grammar
-	<system goal>       -> <program> #Finish
-	<program>        	-> BEGIN #Start <statement_list> END
+/* Updated Phase 2 grammar (us)
+	<system goal>        -> <program> #Finish
+	<program>        -> BEGIN #Start <statement_list> END
 	<statement_list>    -> <statement> | <statement><statement_list>
-	<statement>        	-> READ( <id_list>);
-	<statement>        	-> WRITE( <expr_list> );
-	<statement>        	-> <declaration>
-	<statement>        	-> <assignment>
-	<declaration>       -> INT id; | STRING id;
+	<statement>        -> READ( <id_list>);
+	<statement>        -> WRITE( <expr_list> );
+	<statement>        -> <declaration>
+	<statement>        -> <assignment>
+	<declaration>        -> INT id; | STRING id;
 	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
-							id #processID := <expression> |
-							id #processID := <string_expression>
+	id #processID := <expression> |
+	id #processID := <string_expression>
 	<int_assignment>    -> := <expression>;
-	<string_assignment> -> := <string_expression>;
-	<expression>        -> <primary> | <primary> <op> <primary>
-	<primary>        	-> id | IntLiteral | <op> IntLiteral | ( expression )
+	<string_assignment>    -> := <string_expression>;
+	<expression>        -> <factor> <addop> <expression> | <factor> | <logexpression>
+	<logexpression>    -> <primary> OR <logexpression> | <logfactor>
+	<logfactor>        -> <primary> AND <logfactor> | <logterm>
+	<logterm>        -> NOT <primary> | <primary>
+	<factor>        -> <primary> <multop> <factor> | <primary>
+	<primary>        -> id | IntLiteral | - IntLiteral | ( expression )
 	<str_expression>    -> <strprimary> | <strprimary> + <strprimary>
 	<strprimary>        -> id | StringLiteral | + StringLiteral
+	<addop>        -> + | -
+	<multop>        -> * | / | %
  */
 
 
@@ -286,6 +292,8 @@ public class Parser
         }
         return result;
     }
+    
+    
     
     private StrExpression strprimary(){
     	StrExpression result = new StrExpression();
