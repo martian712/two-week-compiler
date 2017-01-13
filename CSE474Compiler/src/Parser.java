@@ -211,6 +211,7 @@ public class Parser
     	match(Token.ASSIGNOP);
     	expr = expression();
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
+    	
     	codeFactory.generateAssignment(lValue, expr);
     	match(Token.SEMICOLON);
     }
@@ -668,6 +669,9 @@ public class Parser
     	
     	if( symbolTable.checkSTforItem(previousToken.getId())) {
     		error(previousToken, "ERROR Variable already defined!");
+    	}
+    	else {
+    		codeFactory.generateDeclaration(previousToken);
     	}
     	return expr;
     }
