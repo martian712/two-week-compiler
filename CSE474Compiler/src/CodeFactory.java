@@ -13,6 +13,29 @@ class CodeFactory {
 		variablesList = new ArrayList<String>();
 		strVariables = new SymbolTable();
 	}
+	
+	Expression generateNot(Expression right, Operation op){
+		String falseLable = generateLabel("__false");
+		String trueLable = generateLabel("__true");
+		String cont = generateLabel("__cont");
+		Expression tempExpr = new Expression(Expression.TEMPEXPR, createTempName());
+		if (right.expressionType == Expression.LITERALEXPR) {
+			System.out.println("\tMOVL " + "$" + right.expressionName + ", %eax");
+		} else {
+			System.out.println("\tMOVL " + right.expressionName + ", %eax");
+		}
+		System.out.println("\tCMPL $0, %eax");
+		System.out.println("\tJE "+ trueLable);
+		System.out.println("\tJNE " +falseLable);
+		System.out.println(falseLable + ":");
+		System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+		System.out.println("\tJMP " + cont);
+		System.out.println(trueLable + ":");
+		System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+		System.out.println("\tJMP " + cont);
+		System.out.println(cont + ":");
+		return tempExpr;
+	}
 
 	void generateDeclaration(Token token) {
 		variablesList.add(token.getId());
