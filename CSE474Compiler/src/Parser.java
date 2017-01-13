@@ -373,6 +373,8 @@ public class Parser
     		rightOperand = logfactor();
     		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
     	}
+    	if(currentToken.getType() == Token.PLUS || currentToken.getType() == Token.MINUS || currentToken.getType() == Token.MULT || currentToken.getType() == Token.DIV || currentToken.getType() == Token.MOD)
+    		error(currentToken, "ERROR! Cannot mix logical and arithmetic operations");
     	return result;
     }
     
