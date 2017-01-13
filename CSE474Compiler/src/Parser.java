@@ -349,7 +349,7 @@ public class Parser
     		leftOperand = result;
     		op = multOperation();
     		rightOperand = factor();
-    		if(op.opType == Token.DIV && (leftOperand.expressionIntValue == 0 || rightOperand.expressionIntValue == 0)) {
+    		if(op.opType == Token.DIV && (rightOperand.expressionIntValue == 0)) {
     			error(currentToken, "ERROR! Detected a divide by zero operation.");
     			return result;
     		}
