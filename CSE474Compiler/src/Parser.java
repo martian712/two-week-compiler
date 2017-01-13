@@ -380,8 +380,12 @@ public class Parser
     	Expression result;
     	
     	if(currentToken.getType() == Token.NOT) {
-    		match(Token.NOT);
+    		Operation op;
+    		op = notOperation();
     		result = primary();
+    		Expression leftOperand = result;
+    		result = codeFactory.generateNot(leftOperand, op);
+    		/* OLD NOT STUFF USING SYMBOL TABLE
     		if(result.expressionType == Expression.IDEXPR) {
     			if(symbolTable.checkSTforItem(result.expressionName)) {
     				if(symbolTable.getValue(result.expressionName).getIntValue() == 0) {
@@ -400,6 +404,7 @@ public class Parser
     			result.expressionIntValue = 1;
     		else
     			result.expressionIntValue = 0;
+    		*/ //END OF OLD NOT STUFF
     	}
     	else {
     		result = primary();
@@ -528,6 +533,13 @@ public class Parser
     	return op;
     }
     
+    private Operation notOperation() {
+    	Operation op = new Operation();
+    	match(Token.NOT);
+    	op = processOperation();
+    	return op;
+    }
+    
     private Operation multOperation() 
     {
     	Operation op = new Operation();
@@ -648,6 +660,7 @@ public class Parser
         else if ( previousToken.getType() == Token.MOD) op.opType = Token.MOD;
         else if ( previousToken.getType() == Token.AND) op.opType = Token.AND;
         else if ( previousToken.getType() == Token.OR) op.opType = Token.OR;
+        else if ( previousToken.getType() == Token.NOT) op.opType = Token.NOT;
         else error( previousToken );
         return op;
     }
