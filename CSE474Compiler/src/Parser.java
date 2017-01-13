@@ -151,7 +151,7 @@ public class Parser
             {
             	Expression lValue;
             	match( Token.INT);
-            	lValue = identifier();
+            	lValue = decIdentifier();
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> INT id<int_assignment>;
             	{
             		intAssignment(lValue);
@@ -172,7 +172,7 @@ public class Parser
             {
             	StrExpression lValue;
             	match( Token.STRING);
-            	lValue = stridentifier();
+            	lValue = decStrIdentifier();
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <str_assignment>
             	{
             		strAssignment(lValue);
@@ -555,12 +555,27 @@ public class Parser
     	return op;
     }
     
-    private Expression identifier()
+    private Expression decIdentifier()
     {
         Expression expr;
         match( Token.ID );
-        expr = processIdentifier();
+        expr = processNewIdentifier();
         return expr;
+    }
+    
+    private Expression identifier()
+    {
+    	Expression expr;
+    	match( Token.ID);
+    	expr = processIdentifier();
+    	return expr;
+    }
+    
+    private StrExpression decStrIdentifier() {
+    	StrExpression expr;
+    	match(Token.ID);
+    	expr = processNewStrIdentifier();
+    	return expr;
     }
     
     private StrExpression stridentifier()
@@ -643,9 +658,18 @@ public class Parser
         if ( ! symbolTable.checkSTforItem( previousToken.getId() ) )
         {
             //symbolTable.addItem(previousToken.getId());
-            codeFactory.generateDeclaration( previousToken );
+            error(previousToken, "ERROR variable undefined");
         }
         return expr;
+    }
+    
+    private Expression processNewIdentifier() {
+    	Expression expr = new Expression(Expression.IDEXPR, previousToken.getId());
+    	
+    	if( symbolTable.checkSTforItem(previousToken.getId())) {
+    		error(previousToken, "ERROR Variable already defined!");
+    	}
+    	return expr;
     }
     
     private StrExpression processStrIdentifier()
@@ -654,6 +678,18 @@ public class Parser
     	if ( ! symbolTable.checkSTforItem( previousToken.getId()))
     	{
     		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
+    		error(previousToken, "ERROR Variable not defined");
+    	}
+    	return expr;
+    }
+    
+    private StrExpression processNewStrIdentifier()
+    {
+    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, previousToken.getId());
+    	if ( symbolTable.checkSTforItem( previousToken.getId()))
+    	{
+    		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
+    		error(previousToken, "ERROR Variable already defined");
     	}
     	return expr;
     }
