@@ -683,7 +683,7 @@ public class Parser
     	Expression expr = new Expression(Expression.IDEXPR, previousToken.getId());
     	
     	if( symbolTable.checkSTforItem(previousToken.getId())) {
-    		error(previousToken, "ERROR Variable already defined!");
+    		//error(previousToken, "ERROR Variable already defined!");
     	}
     	else {
     		codeFactory.generateDeclaration(previousToken);
@@ -708,7 +708,7 @@ public class Parser
     	if ( symbolTable.checkSTforItem( previousToken.getId()))
     	{
     		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
-    		error(previousToken, "ERROR Variable already defined");
+    		//error(previousToken, "ERROR Variable already defined");
     	}
     	return expr;
     }
