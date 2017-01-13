@@ -194,7 +194,7 @@ public class Scanner
     boolean isReservedSymbol( char ch)
     {
         return( ch == ' ' || ch == '\n' || ch == '\t' || ch == ';' | ch == '+' ||
-                ch == '-' || ch == '(' || ch == ')' || ch == ','  || ch == ':');
+                ch == '-' || ch == '(' || ch == ')' || ch == ','  || ch == ':' || ch == '~');
     }
 
 }
