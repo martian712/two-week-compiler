@@ -596,6 +596,13 @@ public class Parser
         }
         default: error( currentToken );
     	}
+    	if(result.expressionType == Expression.IDEXPR) {
+    		if(symbolTable.checkSTforItem(result.expressionName)) {
+    			result.expressionIntValue = symbolTable.getValue(result.expressionName).getIntValue();
+    		}
+    		else
+    			error(currentToken, "Error right here");
+    	}
     	return result;
     }
     private Expression primary()
