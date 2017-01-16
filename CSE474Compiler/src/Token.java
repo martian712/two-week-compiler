@@ -29,6 +29,12 @@ public class Token
     public final static int OR = 22;
     public final static int NOT = 23;
     public final static int LOGASSIGNOP = 24;
+    public final static int LESSTHAN = 25;
+    public final static int GREATERTHAN = 26;
+    public final static int LESSEQUAL = 27;
+    public final static int GREATEREQUAL = 28;
+    public final static int EQUAL = 29;
+    public final static int NOTEQUAL = 30;
 
     public Token( String tokenString, int tokenType)
     {
