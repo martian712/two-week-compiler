@@ -131,7 +131,7 @@ public class Scanner
         {
         	tokenStr = "<=";
         	tokenType = Token.LESSEQUAL;
-        	i++;
+        	i+=2;
         } else if(currentLine.charAt(i) == '>' && i+1 < len && currentLine.charAt(i+1) != '=')
         {
         	tokenStr = ">";
@@ -141,17 +141,17 @@ public class Scanner
         {
         	tokenStr = ">=";
         	tokenType = Token.GREATEREQUAL;
-        	i++;
+        	i+=2;
         } else if(currentLine.charAt(i) == '=' && i+1 < len && currentLine.charAt(i+1) == '=')
         {
         	tokenStr = "==";
         	tokenType = Token.EQUAL;
-        	i++;
+        	i+=2;
         } else if(currentLine.charAt(i) == '!' && i+1 < len && currentLine.charAt(i+1) == '=')
         {
         	tokenStr = "!=";
         	tokenType = Token.NOTEQUAL;
-        	i++;
+        	i+=2;
         }
         else if (currentLine.charAt(i) == ':'  && i+1 < len && currentLine.charAt(i+1) == '=')
         {
