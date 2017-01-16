@@ -222,7 +222,7 @@ public class Parser
             	labels = relationalWhile();
             	match(Token.RPAREN);
             	statementList();
-            	codeFactory.generateEndWhile(labels[1], labels[2]);
+            	codeFactory.generateEndWhile(labels[0], labels[1]);
             	match(Token.ENDWHILE);
             	break;
             }
