@@ -98,6 +98,25 @@ public class Token
             case INT : str = "INT"; break;
             case STRING : str = "STRING"; break;
             case STRINGLITERAL : str = "STRINGLITERAL"; break;
+            case MULT : str = "MULT"; break;
+            case DIV : str = "DIV"; break;
+            case MOD : str = "MOD"; break;
+            case AND : str = "AND"; break;
+            case OR : str = "OR"; break;
+            case NOT : str = "NOT"; break;
+            case LOGASSIGNOP : str = "LOGASSIGNOP"; break;
+            case LESSTHAN : str = "LESSTHAN"; break;
+            case GREATERTHAN : str = "GREATERTHAN"; break;
+            case LESSEQUAL : str = "LESS THAN OR EQUAL"; break;
+            case GREATEREQUAL : str = "GREATER THAN OR EQUAL"; break;
+            case EQUAL : str = "EQUAL"; break;
+            case NOTEQUAL : str = "NOTEQUAL"; break;
+            case IF : str = "IF"; break;
+            case ENDIF : str = "ENDIF"; break;
+            case ELSE : str = "ELSE"; break;
+            case ENDELSE : str = "ENDELSE"; break;
+            case WHILE : str = "WHILE"; break;
+            case ENDWHILE : str = "ENDWHILE"; break;
             default: str = "Lexical Error";
         }
         return str;
