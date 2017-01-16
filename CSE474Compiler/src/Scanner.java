@@ -147,6 +147,11 @@ public class Scanner
         	tokenStr = "==";
         	tokenType = Token.EQUAL;
         	i+=2;
+        } else if(currentLine.charAt(i) == '=' && i+1 < len && currentLine.charAt(i+1) != '=')
+        {
+        	tokenStr = "=";
+        	tokenType = Token.LexERROR;
+        	i++;
         } else if(currentLine.charAt(i) == '!' && i+1 < len && currentLine.charAt(i+1) == '=')
         {
         	tokenStr = "!=";
