@@ -307,6 +307,22 @@ public class Parser
             codeFactory.generateWrite(expr);
         }
     }
+    private Expression relationalExp(){
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
+    	
+    	result = factor();
+    	while(currentToken.getType() == Token.EQUAL || currentToken.getType() == Token.GREATEREQUAL || currentToken.getType() == Token.GREATERTHAN || 
+    			currentToken.getType() == Token.LESSEQUAL || currentToken.getType() == Token.LESSTHAN || currentToken.getType() == Token.NOTEQUAL){
+    		leftOperand = result;
+    		op = relOperation();
+    		rightOperand = expression();
+    		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
+    	}
+    	return result;
+    }
     
     private Expression expression()
     {
@@ -548,6 +564,38 @@ public class Parser
     	return op;
     }
     
+    private Operation relOperation(){
+    	Operation op = new Operation();
+    	switch(currentToken.getType()){
+    	case Token.EQUAL:
+    		match(Token.EQUAL);
+    		op = processOperation();
+    		break;
+    	case Token.GREATEREQUAL:
+    		match(Token.GREATEREQUAL);
+    		op = processOperation();
+    		break;
+    	case Token.GREATERTHAN:
+    		match(Token.GREATERTHAN);
+    		op = processOperation();
+    		break;
+    	case Token.LESSEQUAL:
+    		match(Token.LESSEQUAL);
+    		op = processOperation();
+    		break;
+    	case Token.LESSTHAN:
+    		match(Token.LESSTHAN);
+    		op = processOperation();
+    		break;
+    	case Token.NOTEQUAL:
+    		match(Token.NOTEQUAL);
+    		op = processOperation();
+    		break;
+    	default: error(currentToken);
+    	}
+    	return op;
+    }
+    
     private Operation multOperation() 
     {
     	Operation op = new Operation();
@@ -669,6 +717,12 @@ public class Parser
         else if ( previousToken.getType() == Token.AND) op.opType = Token.AND;
         else if ( previousToken.getType() == Token.OR) op.opType = Token.OR;
         else if ( previousToken.getType() == Token.NOT) op.opType = Token.NOT;
+        else if ( previousToken.getType() == Token.EQUAL)op.opType = Token.EQUAL;
+        else if ( previousToken.getType() == Token.GREATEREQUAL)op.opType = Token.GREATEREQUAL;
+        else if ( previousToken.getType() == Token.GREATERTHAN)op.opType = Token.GREATERTHAN;
+        else if ( previousToken.getType() == Token.LESSEQUAL)op.opType = Token.LESSEQUAL;
+        else if ( previousToken.getType() == Token.LESSTHAN)op.opType = Token.LESSTHAN;
+        else if (previousToken.getType() == Token.NOTEQUAL) op.opType = Token.NOTEQUAL;
         else error( previousToken );
         return op;
     }
