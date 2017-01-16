@@ -36,9 +36,9 @@
 	<statement>        	-> <assignment>
 	<statement>        	-> <if_stmt> | <else_stmt> | <while_stmt>
 	<declaration>       -> INT id; | STRING id;
-	<if_stmt>        	-> IF ( <logexpression> ) <statment_list> ENDIF <else_stmt>
+	<if_stmt>        	-> IF ( <rel_expr> ) <statment_list> ENDIF <else_stmt>
 	<else_stmt>        	-> ELSE <statment_list> ENDELSE | lambda
-	<while_stmt>        -> WHILE ( <logexpression> ) <statment_list> ENDWHILE
+	<while_stmt>        -> WHILE ( <rel_expr> ) <statment_list> ENDWHILE
 	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
                 			INT id <logic_assignment> |
 							id #processID := <expression> |
