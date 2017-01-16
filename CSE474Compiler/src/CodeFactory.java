@@ -34,6 +34,11 @@ class CodeFactory {
 		System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 		System.out.println("\tJMP " + cont);
 		System.out.println(cont + ":");
+		if(right.expressionIntValue == 0){
+			tempExpr.expressionIntValue = 1;
+		}else{
+			tempExpr.expressionIntValue = 0;
+		}
 		return tempExpr;
 	}
 
@@ -84,6 +89,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if((left.expressionIntValue != 0 && right.expressionIntValue != 0)||(left.expressionIntValue ==0 && right.expressionIntValue ==0)){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 		}else if(op.opType == Token.OR){
 			System.out.println("\tCMPL $0, %eax");
@@ -98,6 +108,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue != 0 || right.expressionIntValue !=0){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}else if(op.opType == Token.EQUAL){
