@@ -34,6 +34,7 @@
 	<statement>        	-> WRITE( <expr_list> );
 	<statement>        	-> <declaration>
 	<statement>        	-> <assignment>
+	<statement>        	-> <if_stmt> | <else_stmt> | <while_stmt>
 	<declaration>       -> INT id; | STRING id;
 	<if_stmt>        	-> IF ( <logexpression> ) <statment_list> ENDIF <else_stmt>
 	<else_stmt>        	-> ELSE <statment_list> ENDELSE | lambda

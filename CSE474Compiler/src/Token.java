@@ -35,6 +35,12 @@ public class Token
     public final static int GREATEREQUAL = 28;
     public final static int EQUAL = 29;
     public final static int NOTEQUAL = 30;
+    public final static int IF = 31;
+    public final static int ENDIF = 32;
+    public final static int ELSE = 33;
+    public final static int ENDELSE = 34;
+    public final static int WHILE = 35;
+    public final static int ENDWHILE = 36;
 
     public Token( String tokenString, int tokenType)
     {
@@ -52,6 +58,12 @@ public class Token
             else if ( temp.compareTo("and") == 0) type = AND;
             else if ( temp.compareTo("or") == 0) type = OR;
             else if ( temp.compareTo("not") == 0) type = NOT;
+            else if ( temp.compareTo("if") == 0) type = IF;
+            else if ( temp.compareTo("endif") == 0) type = ENDIF;
+            else if ( temp.compareTo("else") == 0) type = ELSE;
+            else if ( temp.compareTo("endelse") == 0) type = ENDELSE;
+            else if ( temp.compareTo("while") == 0) type = WHILE;
+            else if ( temp.compareTo("endwhile") == 0) type = ENDWHILE;
             
         }
     }
