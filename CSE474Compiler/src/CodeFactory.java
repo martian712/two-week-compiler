@@ -100,6 +100,85 @@ class CodeFactory {
 			System.out.println(cont + ":");
 			return tempExpr;
 			
+		}else if(op.opType == Token.EQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJE " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
+			
+		}else if(op.opType == Token.GREATEREQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJGE " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
+		}else if(op.opType == Token.GREATERTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJG " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
+		}else if(op.opType == Token.LESSEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJLE " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
+		}else if(op.opType == Token.LESSTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJL " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
+		}else if (op.opType == Token.NOTEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJNE " + trueLable);
+			System.out.println("\tJMP " + falseLable);
+			System.out.println(falseLable + ":");
+			System.out.println("\tMOVL $0, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(trueLable + ":");
+			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
+			System.out.println("\tJMP " + cont);
+			System.out.println(cont + ":");
+			return tempExpr;
+			
 		}
 		System.out.println("\tMOVL " + "%eax, " + tempExpr.expressionName);
 		return tempExpr;
