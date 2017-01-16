@@ -203,6 +203,10 @@ public class Parser
             	if(isresult.expressionIntValue == 1) {
             		statementList();
             		match(Token.ENDIF);
+            		match(Token.ELSE);
+            		while(currentToken.getType() != Token.ENDELSE)
+            			match(currentToken.getType());
+            		match(Token.ENDELSE);
             		break;
             	}
             	else {
