@@ -190,7 +190,7 @@ public class Parser
             		break;
             	}
             }
-            default: error(currentToken);
+            default: error(currentToken, "ERROR! Not a valid <statement>!");
         }
     }
     private void logAssignment(Expression leftSide) {
