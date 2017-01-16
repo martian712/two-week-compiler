@@ -390,7 +390,7 @@ public class Parser
     	if(currentToken.getType() == Token.NOT) {
     		Operation op;
     		op = notOperation();
-    		result = primary();
+    		result = logprimary();
     		Expression leftOperand = result;
     		result = codeFactory.generateNot(leftOperand, op);
     		/* OLD NOT STUFF USING SYMBOL TABLE
@@ -415,7 +415,7 @@ public class Parser
     		*/ //END OF OLD NOT STUFF
     	}
     	else {
-    		result = primary();
+    		result = logprimary();
     	}
     	return result;
     }
@@ -460,6 +460,49 @@ public class Parser
     	return result;
     }
     
+    private Expression logprimary()		//Functions the same as primary() below except in the case of parenthetical expressions, it calls logexpression()
+    {
+    	Expression result = new Expression();
+    	switch(currentToken.getType())
+    	{
+    	case Token.LPAREN:
+    	{
+    		match( Token.LPAREN );
+            result = logexpression();	//Only change from primary is here, waste of code maybe but it enforces our grammar without requiring more symbols
+            match( Token.RPAREN );
+            break;
+    	}
+    	case Token.ID:
+    	{
+    		result = identifier();
+    		break;
+    	}
+    	case Token.INTLITERAL:
+    	{
+    		match(Token.INTLITERAL);
+            result = processLiteral();
+            break;
+    	}
+    	case Token.MINUS:
+        {
+            match(Token.MINUS);
+            processSign();
+            match(Token.INTLITERAL);
+            result = processLiteral();
+            break;
+        }
+        case Token.PLUS:
+        {
+            match(Token.PLUS);
+            processSign();
+            match(Token.INTLITERAL);
+            result = processLiteral();
+            break;
+        }
+        default: error( currentToken );
+    	}
+    	return result;
+    }
     private Expression primary()
     {
         Expression result = new Expression();
