@@ -202,6 +202,7 @@ public class Parser
             	match(Token.RPAREN);
             	statementList();
             	match(Token.ENDIF);
+            	break;
             }
             default: 
             {
