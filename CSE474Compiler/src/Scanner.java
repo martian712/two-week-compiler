@@ -122,7 +122,38 @@ public class Scanner
             tokenStr = ",";
             tokenType = Token.COMMA;
             i++;
-        } else if (currentLine.charAt(i) == ':'  && i+1 < len && currentLine.charAt(i+1) == '=')
+        } else if(currentLine.charAt(i) == '<' && i+1 < len && currentLine.charAt(i+1) != '=')
+        {
+        	tokenStr = "<";
+        	tokenType = Token.LESSTHAN;
+        	i++;
+        } else if(currentLine.charAt(i) == '<' && i+1 < len && currentLine.charAt(i+1) == '=')
+        {
+        	tokenStr = "<=";
+        	tokenType = Token.LESSEQUAL;
+        	i++;
+        } else if(currentLine.charAt(i) == '>' && i+1 < len && currentLine.charAt(i+1) != '=')
+        {
+        	tokenStr = ">";
+        	tokenType = Token.GREATERTHAN;
+        	i++;
+        } else if(currentLine.charAt(i) == '>' && i+1 < len && currentLine.charAt(i+1) == '=')
+        {
+        	tokenStr = ">=";
+        	tokenType = Token.GREATEREQUAL;
+        	i++;
+        } else if(currentLine.charAt(i) == '=' && i+1 < len && currentLine.charAt(i+1) == '=')
+        {
+        	tokenStr = "==";
+        	tokenType = Token.EQUAL;
+        	i++;
+        } else if(currentLine.charAt(i) == '!' && i+1 < len && currentLine.charAt(i+1) == '=')
+        {
+        	tokenStr = "!=";
+        	tokenType = Token.NOTEQUAL;
+        	i++;
+        }
+        else if (currentLine.charAt(i) == ':'  && i+1 < len && currentLine.charAt(i+1) == '=')
         {
             tokenStr = ":=";
             tokenType = Token.ASSIGNOP;
@@ -194,7 +225,8 @@ public class Scanner
     boolean isReservedSymbol( char ch)
     {
         return( ch == ' ' || ch == '\n' || ch == '\t' || ch == ';' | ch == '+' ||
-                ch == '-' || ch == '(' || ch == ')' || ch == ','  || ch == ':' || ch == '~');
+                ch == '-' || ch == '(' || ch == ')' || ch == ','  || ch == ':' || 
+                ch == '~' || ch == '!' || ch == '<' || ch == '>' || ch == '=');
     }
 
 }
