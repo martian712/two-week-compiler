@@ -245,7 +245,7 @@ public class Parser
     	Expression lValue = leftSide;
     	Expression expr;
     	match(Token.LOGASSIGNOP);
-    	expr = logexpression();
+    	expr = relationalExp();
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
     	codeFactory.generateAssignment(lValue, expr);
     	match(Token.SEMICOLON);
@@ -316,7 +316,7 @@ public class Parser
 				}
 				else if(currentToken.getType() == Token.LOGASSIGNOP) {
 					match(Token.LOGASSIGNOP);
-					expr = logexpression();
+					expr = relationalExp();
 				}
 				else {
 					error(currentToken, "Incorrect Assignment Operator for an INT type on the left. Use \":=\" or \"~=\" for int assignments and logic assignments respectively.");
