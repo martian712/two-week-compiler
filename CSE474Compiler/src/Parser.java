@@ -198,7 +198,7 @@ public class Parser
             {
             	match(Token.IF);
             	match(Token.LPAREN);
-            	logexpression();
+            	relationalExp();
             	match(Token.RPAREN);
             	statementList();
             	match(Token.ENDIF);
