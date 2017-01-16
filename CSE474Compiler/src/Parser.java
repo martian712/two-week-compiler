@@ -198,9 +198,21 @@ public class Parser
             {
             	match(Token.IF);
             	match(Token.LPAREN);
-            	relationalExp();
+            	Expression isresult = relationalExp();
             	match(Token.RPAREN);
-            	statementList();
+            	if(isresult.expressionIntValue == 1) {
+            		statementList();
+            		match(Token.ENDIF);
+            		break;
+            	}
+            	else {
+            		while(currentToken.getType() != Token.ENDIF) {
+            			match(currentToken.getType());
+            			match(Token.ENDIF);
+            			elsepart();
+            			break;
+            		}
+            	}
             	match(Token.ENDIF);
             }
             default: 
@@ -726,7 +738,7 @@ public class Parser
     {
     	if(tokenType == Token.END) {					//Removes need for extra lines past program. 
     		if(currentToken.getType() != tokenType) {	//If looking for END and doesn't see end, return an error but keep parsing
-    			error(tokenType);
+    			error(currentToken, "No end of file found");
     		}
     		else {										//If looking for END and find END, do not call findNextToken, break for program to end.
     			return;
@@ -737,7 +749,8 @@ public class Parser
             currentToken = scanner.findNextToken();
         else 
         {
-            error( tokenType );
+        	Token errType = new Token("", tokenType);
+            error( currentToken, "Looking for " + errType.toString() + " but found " + currentToken.toString() );
             currentToken = scanner.findNextToken();
         }
     }

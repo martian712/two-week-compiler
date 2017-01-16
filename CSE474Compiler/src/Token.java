@@ -95,6 +95,9 @@ public class Token
             case MINUS : str = "MINUS"; break;
             case INTLITERAL : str = "INTLITERAL"; break;
             case EOF : str = "EOF"; break;
+            case INT : str = "INT"; break;
+            case STRING : str = "STRING"; break;
+            case STRINGLITERAL : str = "STRINGLITERAL"; break;
             default: str = "Lexical Error";
         }
         return str;
