@@ -193,6 +193,15 @@ public class Parser
             		break;
             	}
             }
+            case Token.IF :
+            {
+            	match(Token.IF);
+            	match(Token.LPAREN);
+            	logexpression();
+            	match(Token.RPAREN);
+            	statementList();
+            	match(Token.ENDIF);
+            }
             default: 
             {
             	error(currentToken, "ERROR! Not a valid <statement>!");
