@@ -794,6 +794,11 @@ public class Parser
     			return;
     		}
     	}
+    	if(currentToken.getType() == Token.END) {
+    		Token errType = new Token("", tokenType);
+    		error(currentToken, "Unexpected end of file, while looking for " + errType.toString());
+    		return;
+    	}
         previousToken = currentToken;
         if ( currentToken.getType() == tokenType )
             currentToken = scanner.findNextToken();
