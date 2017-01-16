@@ -213,8 +213,6 @@ public class Parser
         			elsepart();
         			break;
             	}
-            	match(Token.ENDIF);
-            	break;
             }
             default: 
             {
@@ -273,6 +271,12 @@ public class Parser
     	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
     	codeFactory.generateStrAssignment(lValue, expr);
     	match(Token.SEMICOLON);
+    }
+    
+    private void elsepart() {
+    	match(Token.ELSE);
+    	statementList();
+    	match(Token.ENDELSE);
     }
     
 	private void assignment() {
