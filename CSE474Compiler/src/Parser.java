@@ -214,6 +214,7 @@ public class Parser
             		}
             	}
             	match(Token.ENDIF);
+            	break;
             }
             default: 
             {
