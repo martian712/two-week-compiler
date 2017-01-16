@@ -274,9 +274,11 @@ public class Parser
     }
     
     private void elsepart() {
-    	match(Token.ELSE);
-    	statementList();
-    	match(Token.ENDELSE);
+    	if(currentToken.getType() == Token.ELSE) {
+    		match(Token.ELSE);
+    		statementList();
+    		match(Token.ENDELSE);
+    	}
     }
     
 	private void assignment() {
