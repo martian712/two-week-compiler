@@ -208,10 +208,10 @@ public class Parser
             	else {
             		while(currentToken.getType() != Token.ENDIF) {
             			match(currentToken.getType());
-            			match(Token.ENDIF);
-            			elsepart();
-            			break;
             		}
+            		match(Token.ENDIF);
+        			elsepart();
+        			break;
             	}
             	match(Token.ENDIF);
             	break;
