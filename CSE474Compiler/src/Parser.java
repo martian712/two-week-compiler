@@ -200,7 +200,7 @@ public class Parser
             	match(Token.LPAREN);
             	Expression isresult = relationalExp();
             	match(Token.RPAREN);
-            	if(isresult.expressionIntValue == 1) {
+            	if(isresult.expressionIntValue != 0) {
             		statementList();
             		match(Token.ENDIF);
             		match(Token.ELSE);
