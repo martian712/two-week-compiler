@@ -570,7 +570,7 @@ public class Parser
     	case Token.LPAREN:
     	{
     		match( Token.LPAREN );
-            result = logexpression();	//Only change from primary is here, waste of code maybe but it enforces our grammar without requiring more symbols
+            result = relationalExp();	//Only change from primary is here, waste of code maybe but it enforces our grammar without requiring more symbols
             match( Token.RPAREN );
             break;
     	}
