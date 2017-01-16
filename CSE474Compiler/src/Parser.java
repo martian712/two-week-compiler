@@ -110,8 +110,10 @@ public class Parser
     
     private void statementList()
     {
-        while ( currentToken.getType() == Token.ID || currentToken.getType() == Token.READ || 
+        /*while ( currentToken.getType() == Token.ID || currentToken.getType() == Token.READ || 
                     currentToken.getType() == Token.WRITE || currentToken.getType() == Token.INT || currentToken.getType() == Token.STRING)
+        */
+    	while (currentToken.getType() != Token.END)
         {
             statement();
         }
@@ -131,7 +133,7 @@ public class Parser
             	}
             	else
             	{
-            		error(currentToken);
+            		error(currentToken, "Error! Started statement with an undeclared variable!");
             	}
             	break;
             }
@@ -190,7 +192,18 @@ public class Parser
             		break;
             	}
             }
-            default: error(currentToken, "ERROR! Not a valid <statement>!");
+            default: 
+            {
+            	error(currentToken, "ERROR! Not a valid <statement>!");
+            	int errorParseCounter = 0;
+            	while((currentToken.getType() != Token.SEMICOLON || currentToken.getType() != Token.END) && errorParseCounter < 10)
+            	{
+            		match(currentToken.getType());
+            	}
+            	if(errorParseCounter == 9) {
+            		error(currentToken, "ERROR! Parser tried to scan ten tokens after an incorrect statement and did not find a statement terminator or the END token.");
+            	}
+            }
         }
     }
     private void logAssignment(Expression leftSide) {
