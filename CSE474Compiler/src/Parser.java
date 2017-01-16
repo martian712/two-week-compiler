@@ -385,12 +385,12 @@ public class Parser
     	Expression rightOperand;
     	Operation op;
     	
-    	result = factor();
+    	result = logexpression();
     	while(currentToken.getType() == Token.EQUAL || currentToken.getType() == Token.GREATEREQUAL || currentToken.getType() == Token.GREATERTHAN || 
     			currentToken.getType() == Token.LESSEQUAL || currentToken.getType() == Token.LESSTHAN || currentToken.getType() == Token.NOTEQUAL){
     		leftOperand = result;
     		op = relOperation();
-    		rightOperand = expression();
+    		rightOperand = logexpression();
     		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
     	}
     	return result;
