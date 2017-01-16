@@ -114,7 +114,8 @@ public class Parser
         /*while ( currentToken.getType() == Token.ID || currentToken.getType() == Token.READ || 
                     currentToken.getType() == Token.WRITE || currentToken.getType() == Token.INT || currentToken.getType() == Token.STRING)
         */
-    	while (currentToken.getType() != Token.END)
+    	while (currentToken.getType() != Token.END && currentToken.getType() != Token.ENDIF &&
+    				currentToken.getType() != Token.ENDELSE && currentToken.getType() != Token.ENDWHILE)
         {
             statement();
         }
