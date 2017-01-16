@@ -362,6 +362,23 @@ public class Parser
             codeFactory.generateWrite(expr);
         }
     }
+    private String[] relationalWhile(){
+    	String[] labels = new String[2];
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
+    	
+    	result = factor();
+    	while(currentToken.getType() == Token.EQUAL || currentToken.getType() == Token.GREATEREQUAL || currentToken.getType() == Token.GREATERTHAN || 
+    			currentToken.getType() == Token.LESSEQUAL || currentToken.getType() == Token.LESSTHAN || currentToken.getType() == Token.NOTEQUAL){
+    		leftOperand = result;
+    		op = relOperation();
+    		rightOperand = expression();
+    		labels = codeFactory.generateWhile(leftOperand,rightOperand,op);
+    	}
+    	return labels;
+    }
     private Expression relationalExp(){
     	Expression result;
     	Expression leftOperand;

@@ -527,4 +527,52 @@ class CodeFactory {
 		return tempVar;
 	}
 
+	public String[] generateWhile(Expression left, Expression right, Operation op) {
+		String cont = generateLabel("__cont");
+		String loop = generateLabel("__loop");
+		System.out.println(loop + ":");
+		if (right.expressionType == Expression.LITERALEXPR) {
+			System.out.println("\tMOVL " + "$" + right.expressionName + ", %ebx");
+		} else {
+			System.out.println("\tMOVL " + right.expressionName + ", %ebx");
+		}
+		if (left.expressionType == Expression.LITERALEXPR) {
+			System.out.println("\tMOVL " + "$" + left.expressionName + ", %eax");
+		} else {
+			System.out.println("\tMOVL " + left.expressionName + ", %eax");
+		}
+		if(op.opType == Token.EQUAL){
+		System.out.println("\tCMPL %ebx, %eax");
+		System.out.println("\tJNE " + cont);
+		
+		}else if(op.opType == Token.GREATEREQUAL){
+		System.out.println("\tCMPL %ebx, %eax");
+		System.out.println("\tJL " + cont);
+
+		
+		}else if(op.opType == Token.GREATERTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJLE " + cont);
+		
+		}else if(op.opType == Token.LESSEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJG " + cont);
+
+		
+		}else if(op.opType == Token.LESSTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJGE " + cont);
+		
+		}else if (op.opType == Token.NOTEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJE " + cont);
+
+		
+		}
+		String[] labels = new String[2];
+		labels[0] = loop;
+		labels[1] = cont;
+		return labels;
+	}
+
 }
