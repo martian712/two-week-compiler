@@ -203,10 +203,7 @@ public class Parser
             	if(isresult.expressionIntValue != 0) {
             		statementList();
             		match(Token.ENDIF);
-            		match(Token.ELSE);
-            		while(currentToken.getType() != Token.ENDELSE)
-            			match(currentToken.getType());
-            		match(Token.ENDELSE);
+            		elsepart(false);
             		break;
             	}
             	else {
@@ -214,7 +211,7 @@ public class Parser
             			match(currentToken.getType());
             		}
             		match(Token.ENDIF);
-        			elsepart();
+        			elsepart(true);
         			break;
             	}
             }
@@ -289,12 +286,22 @@ public class Parser
     	match(Token.SEMICOLON);
     }
     
-    private void elsepart() {
-    	if(currentToken.getType() == Token.ELSE) {
-    		match(Token.ELSE);
-    		statementList();
-    		match(Token.ENDELSE);
-    	}
+    private void elsepart(boolean shouldElse) {
+		if (shouldElse) {
+			if (currentToken.getType() == Token.ELSE) {
+				match(Token.ELSE);
+				statementList();
+				match(Token.ENDELSE);
+			}
+		}
+		else {
+			if (currentToken.getType() == Token.ELSE) {
+				while(currentToken.getType() != Token.ENDELSE) {
+					match(currentToken.getType());
+				}
+				match(Token.ENDELSE);
+			}
+		}
     }
     
 	private void assignment() {
