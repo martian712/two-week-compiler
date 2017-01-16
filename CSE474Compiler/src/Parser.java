@@ -27,32 +27,38 @@
  */
 
 /* Updated Phase 2 grammar (us)
-	<system goal>       -> <program> #Finish
+	<system goal>      	-> <program> #Finish
 	<program>        	-> BEGIN #Start <statement_list> END
-	<statement_list>   	-> <statement> | <statement><statement_list>
+	<statement_list>    -> <statement> | <statement><statement_list>
 	<statement>        	-> READ( <id_list>);
 	<statement>        	-> WRITE( <expr_list> );
 	<statement>        	-> <declaration>
 	<statement>        	-> <assignment>
-	<declaration>      	-> INT id; | STRING id;
-	<assignment>       	-> INT id <int_assignment> | STRING id <string_assignment> |
+	<declaration>       -> INT id; | STRING id;
+	<if_stmt>        	-> IF ( <logexpression> ) <statment_list> ENDIF <else_stmt>
+	<else_stmt>        	-> ELSE <statment_list> ENDELSE | lambda
+	<while_stmt>        -> WHILE ( <logexpression> ) <statment_list> ENDWHILE
+	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
                 			INT id <logic_assignment> |
 							id #processID := <expression> |
 							id #processID := <string_expression> |
-							id #processID ~= <logexpression>
+							Id #processID ~= <logexpression>
 	<int_assignment>    -> := <expression>;
 	<string_assignment> -> := <string_expression>;
 	<logic_assignment>  -> ~= <logexpression>;
 	<expression>        -> <factor> <addop> <expression> | <factor> 
 	<logexpression>    	-> <logfactor> OR <logexpression> | <logfactor>
-	<logfactor>        	-> <primary> AND <logfactor> | <logterm>
-	<logterm>        	-> NOT <primary> | <primary>
+	<logfactor>        	-> <logterm> AND <logfactor> | <logterm>
+	<logterm>        	-> NOT <logprimary> | <logprimary>
+	<logprimary>        -> id | IntLiteral | ( <logexpression> ) | <rel_expr>
+	<rel_expr>        	-> <expr> <rel_op> <expr>
 	<factor>        	-> <primary> <multop> <factor> | <primary>
-	<primary>        	-> id | IntLiteral | - IntLiteral | ( <expression> ) | ( <logexpression> )
+	<primary>        	-> id | IntLiteral | - IntLiteral | ( <expression> ) 
 	<str_expression>    -> <strprimary> | <strprimary> + <strprimary>
 	<strprimary>        -> id | StringLiteral | + StringLiteral
 	<addop>        		-> + | -
 	<multop>        	-> * | / | %
+	<rel_op>        	-> < | > | == | <= | >= | !=
  */
 
 
