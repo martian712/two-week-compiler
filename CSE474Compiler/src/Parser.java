@@ -393,6 +393,9 @@ public class Parser
     		rightOperand = logexpression();
     		result = codeFactory.generateArithExpr(leftOperand, rightOperand, op);
     	}
+    	if(currentToken.getType() == Token.EQUAL || currentToken.getType() == Token.GREATEREQUAL || currentToken.getType() == Token.GREATERTHAN || 
+    			currentToken.getType() == Token.LESSEQUAL || currentToken.getType() == Token.LESSTHAN || currentToken.getType() == Token.NOTEQUAL)
+    		error(currentToken, "Cannot have chained relational operators");
     	return result;
     }
     
