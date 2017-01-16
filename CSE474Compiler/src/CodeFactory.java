@@ -575,4 +575,10 @@ class CodeFactory {
 		return labels;
 	}
 
+	public void generateEndWhile(String loop, String cont) {
+		System.out.println("\tJMP " + loop);
+		System.out.println(cont + ":");
+		
+	}
+
 }
