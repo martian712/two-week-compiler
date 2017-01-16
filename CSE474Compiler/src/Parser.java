@@ -214,6 +214,18 @@ public class Parser
         			break;
             	}
             }
+            case Token.WHILE :
+            {
+            	match(Token.WHILE);
+            	match(Token.LPAREN);
+            	String[] labels = new String[2];
+            	labels = relationalWhile();
+            	match(Token.RPAREN);
+            	statementList();
+            	codeFactory.generateEndWhile(labels[1], labels[2]);
+            	match(Token.ENDWHILE);
+            	break;
+            }
             default: 
             {
             	error(currentToken, "ERROR! Not a valid <statement>!");
