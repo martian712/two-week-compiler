@@ -111,6 +111,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue == right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 			
@@ -125,6 +130,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue >= right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}else if(op.opType == Token.GREATERTHAN){
@@ -138,6 +148,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue > right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}else if(op.opType == Token.LESSEQUAL){
@@ -151,6 +166,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue <= right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}else if(op.opType == Token.LESSTHAN){
@@ -164,6 +184,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue < right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}else if (op.opType == Token.NOTEQUAL){
@@ -177,6 +202,11 @@ class CodeFactory {
 			System.out.println("\tMOVL $1, " + tempExpr.expressionName);
 			System.out.println("\tJMP " + cont);
 			System.out.println(cont + ":");
+			if(left.expressionIntValue != right.expressionIntValue){
+				tempExpr.expressionIntValue = 1;
+			}else{
+				tempExpr.expressionIntValue = 0;
+			}
 			return tempExpr;
 			
 		}
