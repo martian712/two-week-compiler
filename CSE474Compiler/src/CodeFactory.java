@@ -137,6 +137,20 @@ class CodeFactory {
 			firstWrite = false;
 			
 			System.out.println("\tmovl " + idName + ",%eax");
+			//---------MARK FOR CORRECTION CODE ---------------
+			String nonzeroPrintLabel = generateLabel("__nonzeroPrint");
+			System.out.println("\tcmpl $0, %eax");
+			System.out.println("jne " + nonzeroPrintLabel);
+			System.out.println("\tpush $'0'");
+			System.out.println("\tmovl $4, %eax /* The system call for write (sys_write) */");
+			System.out.println("\tmovl $1, %ebx /* File descriptor 1 - standard output */");
+			System.out.println("\tmovl $1, %edx /* Place number of characters to display */");
+			System.out.println("\tleal (%esp), %ecx /* Put effective address of zero into ecx */");
+			System.out.println("\tint $0x80 /* Call to the Linux OS */");
+			System.out.println("popl %eax");
+			System.out.println("\tjmp __writeExit /* Needed to jump over the reversePrint code since we printed the zero */ ");
+			System.out.println(nonzeroPrintLabel + ":");
+			//---------END MARK -------------------------------
 			System.out.println("\tpushl %eax");
 			System.out.println("\tcall __reversePrint    /* The return address is at top of stack! */");
 			System.out.println("\tpopl  %eax    /* Remove value pushed onto the stack */");
