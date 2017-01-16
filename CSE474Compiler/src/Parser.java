@@ -752,21 +752,24 @@ public class Parser
     private Operation processOperation()
     {
         Operation op = new Operation();
-        if ( previousToken.getType() == Token.PLUS ) op.opType = Token.PLUS;
-        else if ( previousToken.getType() == Token.MINUS ) op.opType = Token.MINUS;
-        else if ( previousToken.getType() == Token.MULT) op.opType = Token.MULT;
-        else if ( previousToken.getType() == Token.DIV) op.opType = Token.DIV;
-        else if ( previousToken.getType() == Token.MOD) op.opType = Token.MOD;
-        else if ( previousToken.getType() == Token.AND) op.opType = Token.AND;
-        else if ( previousToken.getType() == Token.OR) op.opType = Token.OR;
-        else if ( previousToken.getType() == Token.NOT) op.opType = Token.NOT;
-        else if ( previousToken.getType() == Token.EQUAL)op.opType = Token.EQUAL;
-        else if ( previousToken.getType() == Token.GREATEREQUAL)op.opType = Token.GREATEREQUAL;
-        else if ( previousToken.getType() == Token.GREATERTHAN)op.opType = Token.GREATERTHAN;
-        else if ( previousToken.getType() == Token.LESSEQUAL)op.opType = Token.LESSEQUAL;
-        else if ( previousToken.getType() == Token.LESSTHAN)op.opType = Token.LESSTHAN;
-        else if (previousToken.getType() == Token.NOTEQUAL) op.opType = Token.NOTEQUAL;
-        else error( previousToken );
+        switch (previousToken.getType())
+        {
+        case Token.PLUS: { op.opType = Token.PLUS; break; }
+        case Token.MINUS: { op.opType = Token.MINUS; break; }
+        case Token.MULT: { op.opType = Token.MULT; break; }
+        case Token.DIV: { op.opType = Token.DIV; break; }
+        case Token.MOD: { op.opType = Token.MOD; break; }
+        case Token.AND: { op.opType = Token.AND; break; }
+        case Token.OR: { op.opType = Token.OR; break; }
+        case Token.NOT: { op.opType = Token.NOT; break; }
+        case Token.EQUAL: { op.opType = Token.EQUAL; break; }
+        case Token.GREATEREQUAL: { op.opType = Token.GREATEREQUAL; break; }
+        case Token.GREATERTHAN: { op.opType = Token.GREATERTHAN; break; }
+        case Token.LESSEQUAL: { op.opType = Token.LESSEQUAL; break; }
+        case Token.LESSTHAN: { op.opType = Token.LESSTHAN; break; }
+        case Token.NOTEQUAL: { op.opType = Token.NOTEQUAL; break; }
+        default: error( previousToken );
+        }
         return op;
     }
     
