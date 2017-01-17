@@ -34,8 +34,12 @@
 	<statement>        	-> WRITE( <expr_list> );
 	<statement>        	-> <declaration>
 	<statement>        	-> <assignment>
+	<statement>        	-> <func_declaration>
+	<statement>        	-> <func_call>
 	<statement>        	-> <if_stmt> | <else_stmt> | <while_stmt>
 	<declaration>       -> INT id; | STRING id;
+	<func_declaration>  -> FUNC id ( ) <statement_list> ENDFUNC
+	<func_call>        	-> CALL id #ProcessId ( ) ;
 	<if_stmt>        	-> IF ( <rel_expr> ) <statment_list> ENDIF <else_stmt>
 	<else_stmt>        	-> ELSE <statment_list> ENDELSE | lambda
 	<while_stmt>        -> WHILE ( <rel_expr> ) <statment_list> ENDWHILE
