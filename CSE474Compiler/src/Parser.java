@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /* PROGRAM Micro */
 
@@ -76,6 +77,7 @@ public class Parser
     private Token previousToken;
     private static boolean signSet = false;
     private static String signFlag = "+";
+    private static ArrayList<String> scopes;
 
     public Parser()
     {
