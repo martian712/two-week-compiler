@@ -119,7 +119,8 @@ public class Parser
                     currentToken.getType() == Token.WRITE || currentToken.getType() == Token.INT || currentToken.getType() == Token.STRING)
         */
     	while (currentToken.getType() != Token.END && currentToken.getType() != Token.ENDIF &&
-    				currentToken.getType() != Token.ENDELSE && currentToken.getType() != Token.ENDWHILE)
+    				currentToken.getType() != Token.ENDELSE && currentToken.getType() != Token.ENDWHILE &&
+    				currentToken.getType() != Token.ENDFUNC)
         {
             statement();
         }
@@ -230,6 +231,14 @@ public class Parser
             	codeFactory.generateEndWhile(labels[0], labels[1]);
             	match(Token.ENDWHILE);
             	break;
+            }
+            case Token.FUNC :
+            {
+            	break;
+            }
+            case Token.CALL :
+            {
+            	
             }
             default: 
             {
