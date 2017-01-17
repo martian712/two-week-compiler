@@ -234,11 +234,27 @@ public class Parser
             }
             case Token.FUNC :
             {
+            	match(Token.FUNC);
+            	match(Token.ID);		//TODO process ID, make sure it hasn't been used as a function before
+            	match(Token.LPAREN);
+            	match(Token.RPAREN);
+            	//TODO	find some way to update the scope
+            	//TODO	codeFactory stuff for the function label
+            	statementList();
+            	match(Token.ENDFUNC);
+            	//TODO	update the scope again (i.e. pop off the scope stack)
+            	//TODO	codeFactory stuff for the return and context return
             	break;
             }
             case Token.CALL :
             {
-            	
+            	match(Token.CALL);
+            	match(Token.ID);		//TODO process ID, make sure it was declared before AS A FUNCTION
+            	match(Token.LPAREN);
+            	match(Token.RPAREN);
+            	//TODO	codeFactory stuff for context switch and then a function call.
+            	match(Token.SEMICOLON);
+            	break;
             }
             default: 
             {
