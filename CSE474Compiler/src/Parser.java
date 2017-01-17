@@ -234,6 +234,7 @@ public class Parser
             	while((currentToken.getType() != Token.SEMICOLON || currentToken.getType() != Token.END) && errorParseCounter < 10)
             	{
             		match(currentToken.getType());
+            		errorParseCounter++;
             	}
             	if(errorParseCounter == 9) {
             		error(currentToken, "ERROR! Parser tried to scan ten tokens after an incorrect statement and did not find a statement terminator or the END token.");
