@@ -27,7 +27,7 @@ import java.util.ArrayList;
    <system goal>    -> <program> EofSym #Finish
  */
 
-/* Updated Phase 2 grammar (us)
+/* Updated Phase 4 grammar (us)
 	<system goal>      	-> <program> #Finish
 	<program>        	-> BEGIN #Start <statement_list> END
 	<statement_list>    -> <statement> | <statement><statement_list>
