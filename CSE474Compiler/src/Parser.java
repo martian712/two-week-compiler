@@ -91,6 +91,7 @@ public class Parser
         scanner = new Scanner("test.txt");
         codeFactory = new CodeFactory();
         symbolTable = new SymbolTable();
+        scopes = new ArrayList<String>();
         parser.parse();
     }
     
@@ -238,13 +239,13 @@ public class Parser
             {
             	match(Token.FUNC);
             	match(Token.ID);		//TODO process ID, make sure it hasn't been used as a function before
+            	scopes.add(previousToken.getId());
             	match(Token.LPAREN);
             	match(Token.RPAREN);
-            	//TODO	find some way to update the scope
             	//TODO	codeFactory stuff for the function label
             	statementList();
             	match(Token.ENDFUNC);
-            	//TODO	update the scope again (i.e. pop off the scope stack)
+            	scopes.remove(scopes.size()-1);
             	//TODO	codeFactory stuff for the return and context return
             	break;
             }
