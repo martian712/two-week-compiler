@@ -42,8 +42,8 @@ class CodeFactory {
 		return tempExpr;
 	}
 
-	void generateDeclaration(Token token) {
-		variablesList.add(token.getId());
+	void generateDeclaration(String ID) {
+		variablesList.add(ID);
 	}
 	
 	Expression generateArithExpr(Expression left, Expression right, Operation op) {
