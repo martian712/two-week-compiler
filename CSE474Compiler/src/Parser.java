@@ -164,6 +164,7 @@ public class Parser
             		error(previousToken, "Error, variable has already been declared");
             		while(currentToken.getType() != Token.SEMICOLON)
             			match(currentToken.getType());
+            		match(Token.SEMICOLON);
             		break;
             	}
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> INT id<int_assignment>;
@@ -191,6 +192,7 @@ public class Parser
             		error(previousToken, "Error, variable has already been declared");
             		while(currentToken.getType() != Token.SEMICOLON)
             			match(currentToken.getType());
+            		match(Token.SEMICOLON);
             		break;
             	}
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <str_assignment>
@@ -253,6 +255,7 @@ public class Parser
             			while (currentToken.getType() != Token.ENDFUNC) {
             				match(currentToken.getType());
             			}
+            			match(Token.ENDFUNC);
             			break;
             		}
             	}
@@ -267,6 +270,7 @@ public class Parser
             			while (currentToken.getType() != Token.ENDFUNC) {
             				match(currentToken.getType());
             			}
+            			match(Token.ENDFUNC);
             			break;
             		}
             	}
@@ -288,6 +292,7 @@ public class Parser
             		while(currentToken.getType() != Token.SEMICOLON) {
             			match(currentToken.getType());
             		}
+            		match(Token.SEMICOLON);
             		break;
             	}
             	String funcname = getScope(previousToken.getId() + "_");
@@ -309,6 +314,7 @@ public class Parser
             	if(errorParseCounter == 9) {
             		error(currentToken, "ERROR! Parser tried to scan ten tokens after an incorrect statement and did not find a statement terminator or the END token.");
             	}
+            	match(Token.SEMICOLON);
             }
         }
     }
