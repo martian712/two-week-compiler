@@ -268,11 +268,11 @@ public class Parser
             	}
             	match(Token.LPAREN);
             	match(Token.RPAREN);
-            	//TODO	codeFactory stuff for the function label
+            	String contLable = codeFactory.generateFuncLabel();
             	statementList();
             	match(Token.ENDFUNC);
             	scopes.remove(scopes.size()-1);
-            	//TODO	codeFactory stuff for the return and context return
+            	codeFactory.generateFuncReturn();
             	break;
             }
             case Token.CALL :
