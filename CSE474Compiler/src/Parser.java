@@ -951,6 +951,16 @@ public class Parser
     	return expr;
     }
     
+    private String getScope(String inVar){
+    	String varName = "";
+    	for(int i = scopes.size()-1; i >=0; i--){
+    		if(symbolTable.checkSTforItem(scopes.get(i) + inVar)){
+    			varName = scopes.get(i) + inVar;
+    		}
+    	}
+    	return varName;
+    }
+    
     private void error(Token token, String str) {
     	System.out.println( "Syntax error! Parsing token type " + token.toString() + " at line number " + 
                 scanner.getLineNumber() );
