@@ -250,29 +250,38 @@ public class Parser
             case Token.FUNC :
             {
             	match(Token.FUNC);
-            	match(Token.ID);		//TODO process ID, make sure it hasn't been used as a function before
+            	match(Token.ID);
+            	String funcname;
             	if(scopes.isEmpty()) {
             		if(!symbolTable.checkSTforItem(previousToken.getId() + "_")) {
-            			scopes.add(previousToken.getId() + "_");
-            			symbolTable.addItem(previousToken.getId() + "_", "FUNC", previousToken.getId());
-            		} else
-            			error(previousToken, "Error! Function has already been defined or a variable has been defined with the same name and an underscore");
+            			funcname = previousToken.getId() + "_";
+            			scopes.add(funcname);
+            			symbolTable.addItem(funcname, "FUNC", previousToken.getId());
+            		} else {
+            			error(previousToken,
+            					"Error! Function has already been defined or a variable has been defined with the same name and an underscore");
+            			while (currentToken.getType() != Token.ENDFUNC) {
+            				match(currentToken.getType());
+            			}
+            			break;
+            		}
             	}
             	else {
-            		String funcname = scopes.get(scopes.size() - 1);
+            		funcname = scopes.get(scopes.size() - 1);
             		if(!symbolTable.checkSTforItem(funcname + previousToken.getId() + "_")) {
-            			scopes.add(funcname + previousToken.getId() + "_");
-            			symbolTable.addItem(funcname + previousToken.getId() + "_", "FUNC", previousToken.getId());
+            			funcname = funcname + previousToken.getId() + "_";
+            			scopes.add(funcname);
+            			symbolTable.addItem(funcname, "FUNC", previousToken.getId());
             		} else
             			error(previousToken, "Error! Function has already been declared in this scope, or a variable has been defined with this scope followed by this name followed by an underscore");
             	}
             	match(Token.LPAREN);
             	match(Token.RPAREN);
-            	String contLable = codeFactory.generateFuncLabel();
+            	String contLabel = codeFactory.generateFuncLabel(funcname);
             	statementList();
             	match(Token.ENDFUNC);
             	scopes.remove(scopes.size()-1);
-            	codeFactory.generateFuncReturn();
+            	codeFactory.generateFuncReturn(contLabel);
             	break;
             }
             case Token.CALL :
