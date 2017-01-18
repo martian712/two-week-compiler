@@ -382,7 +382,7 @@ public class Parser
 			if((symbolTable.getValue(getScope(currentToken.getId())).getType()).equals("INT")){
 				Expression lValue;
 				Expression expr;
-				lValue = decIdentifier();		
+				lValue = identifier();		
 				if(currentToken.getType() == Token.ASSIGNOP) {
 					match(Token.ASSIGNOP);
 					expr = expression();
@@ -401,7 +401,7 @@ public class Parser
 			}else if((symbolTable.getValue(getScope(currentToken.getId())).getType()).equals("STRING")){
 				StrExpression lValue;
 				StrExpression expr;
-				lValue = decStrIdentifier();
+				lValue = stridentifier();
 				match(Token.ASSIGNOP);
 				expr = strexpression();
 				if(expr.expressionType == StrExpression.STRIDEXPR) {
