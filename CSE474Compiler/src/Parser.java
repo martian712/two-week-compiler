@@ -272,8 +272,13 @@ public class Parser
             			funcname = funcname + previousToken.getId() + "_";
             			scopes.add(funcname);
             			symbolTable.addItem(funcname, "FUNC", previousToken.getId());
-            		} else
+            		} else {
             			error(previousToken, "Error! Function has already been declared in this scope, or a variable has been defined with this scope followed by this name followed by an underscore");
+            			while (currentToken.getType() != Token.ENDFUNC) {
+            				match(currentToken.getType());
+            			}
+            			break;
+            		}
             	}
             	match(Token.LPAREN);
             	match(Token.RPAREN);
