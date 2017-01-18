@@ -251,7 +251,19 @@ public class Parser
             {
             	match(Token.FUNC);
             	match(Token.ID);		//TODO process ID, make sure it hasn't been used as a function before
-            	scopes.add(previousToken.getId() + "_");
+            	if(scopes.isEmpty()) {
+            		if(!symbolTable.checkSTforItem(previousToken.getId() + "_"))
+            			scopes.add(previousToken.getId() + "_");
+            		else
+            			error(previousToken, "Error! Function has already been defined or a variable has been defined with the same name and an underscore");
+            	}
+            	else {
+            		String funcname = scopes.get(scopes.size() - 1);
+            		if(!symbolTable.checkSTforItem(funcname + previousToken.getId() + "_"))
+            			scopes.add(funcname + previousToken.getId() + "_");
+            		else
+            			error(previousToken, "Error! Function has already been declared in this scope, or a variable has been defined with this scope followed by this name followed by an underscore");
+            	}
             	match(Token.LPAREN);
             	match(Token.RPAREN);
             	//TODO	codeFactory stuff for the function label
