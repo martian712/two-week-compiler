@@ -302,6 +302,7 @@ public class Parser
     }
     private void logAssignment(Expression leftSide) {
     	Expression lValue = leftSide;
+    	lValue.expressionName = getScope(leftSide.expressionName);
     	Expression expr;
     	match(Token.LOGASSIGNOP);
     	expr = relationalExp();
@@ -368,8 +369,8 @@ public class Parser
     }
     
 	private void assignment() {
-		if (symbolTable.checkSTforItem(currentToken.getId())) {
-			if((symbolTable.getValue(currentToken.getId()).getType()).equals("INT")){
+		if (symbolTable.checkSTforItem(getScope(currentToken.getId()))) {
+			if((symbolTable.getValue(getScope(currentToken.getId())).getType()).equals("INT")){
 				Expression lValue;
 				Expression expr;
 				lValue = decIdentifier();		
@@ -388,7 +389,7 @@ public class Parser
 				symbolTable.getValue(lValue.expressionName).setValue(expr.expressionIntValue);
 				codeFactory.generateAssignment(lValue, expr);
 				match(Token.SEMICOLON);
-			}else{
+			}else if((symbolTable.getValue(getScope(currentToken.getId())).getType()).equals("STRING")){
 				StrExpression lValue;
 				StrExpression expr;
 				lValue = decStrIdentifier();
@@ -937,9 +938,9 @@ public class Parser
     
     private Expression processIdentifier()
     {
-        Expression expr = new Expression( Expression.IDEXPR, previousToken.getId());
+        Expression expr = new Expression( Expression.IDEXPR, getScope(previousToken.getId()));
         
-        if ( ! symbolTable.checkSTforItem( previousToken.getId() ) )
+        if ( ! symbolTable.checkSTforItem( getScope(previousToken.getId() ) ))
         {
             //symbolTable.addItem(previousToken.getId());
             error(previousToken, "ERROR variable undefined");
@@ -949,21 +950,21 @@ public class Parser
     
     private Expression processNewIdentifier() {
     	
-    	Expression expr = new Expression(Expression.IDEXPR, previousToken.getId());
+    	Expression expr = new Expression(Expression.IDEXPR, getScope(previousToken.getId()));
     	
-    	if( symbolTable.checkSTforItem(previousToken.getId())) {
+    	if( symbolTable.checkSTforItem(getScope(previousToken.getId()))) {
     		//error(previousToken, "ERROR Variable already defined!");
     	}
     	else {
-    		codeFactory.generateDeclaration(previousToken);
+    		codeFactory.generateDeclaration(getScope(previousToken.getId()));
     	}
     	return expr;
     }
     
     private StrExpression processStrIdentifier()
     {
-    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, previousToken.getId());
-    	if ( ! symbolTable.checkSTforItem( previousToken.getId()))
+    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, getScope(previousToken.getId()));
+    	if ( ! symbolTable.checkSTforItem( getScope(previousToken.getId())))
     	{
     		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
     		error(previousToken, "ERROR Variable not defined");
@@ -973,8 +974,8 @@ public class Parser
     
     private StrExpression processNewStrIdentifier()
     {
-    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, previousToken.getId());
-    	if ( symbolTable.checkSTforItem( previousToken.getId()))
+    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, getScope(previousToken.getId()));
+    	if ( symbolTable.checkSTforItem( getScope(previousToken.getId())))
     	{
     		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
     		//error(previousToken, "ERROR Variable already defined");
