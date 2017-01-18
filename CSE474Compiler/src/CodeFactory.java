@@ -596,4 +596,25 @@ class CodeFactory {
 		
 	}
 
+	public String generateFuncLabel(String funcname) {
+		String contLabel = generateLabel("__cont");
+		System.out.println("\tJMP " + contLabel);
+		System.out.println(funcname + ":");
+		System.out.println("\tPUSHL %eax");
+		System.out.println("\tPUSHL %ebx");
+		System.out.println("\tPUSHL %ecx");
+		System.out.println("\tPUSHL %edx");
+		return contLabel;
+	}
+
+	public void generateFuncReturn(String contLabel) {
+		System.out.println("\tPOPL %eax");
+		System.out.println("\tPOPL %ebx");
+		System.out.println("\tPOPL %ecx");
+		System.out.println("\tPOPL %edx");
+		System.out.println("\tRET");
+		System.out.println(contLabel + ":");
+		
+	}
+
 }
