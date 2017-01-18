@@ -311,6 +311,7 @@ public class Parser
     }
     private void strAssignment(StrExpression leftSide){
     	StrExpression lValue = leftSide;
+    	lValue.expressionName = getScope(leftSide.expressionName);
     	StrExpression expr;
     	match(Token.ASSIGNOP);
     	expr = strexpression();
@@ -320,6 +321,7 @@ public class Parser
     }
     private void intAssignment(Expression leftSide){
     	Expression lValue = leftSide;
+    	lValue.expressionName = getScope(leftSide.expressionName);
     	Expression expr;
     	match(Token.ASSIGNOP);
     	expr = expression();
@@ -331,6 +333,7 @@ public class Parser
     
     private void intDeclaration(Expression leftSide){
     	Expression lValue = leftSide;
+    	lValue.expressionName = getScope(leftSide.expressionName);
     	Expression expr = new Expression(Expression.LITERALEXPR, 0);
     	symbolTable.addItem(lValue.expressionName, expr.expressionIntValue);
     	codeFactory.generateAssignment(lValue, expr);
@@ -339,6 +342,7 @@ public class Parser
     
     private void strDeclaration(StrExpression leftSide){
     	StrExpression lValue = leftSide;
+    	lValue.expressionName = getScope(leftSide.expressionName);
     	StrExpression expr = new StrExpression(StrExpression.STRLITERALEXPR, "", "");
     	symbolTable.addItem(lValue.expressionName, expr.expressionStrValue);
     	codeFactory.generateStrAssignment(lValue, expr);
@@ -979,7 +983,7 @@ public class Parser
     }
     
     private String getScope(String inVar){
-    	String varName = "";
+    	String varName = inVar;
     	for(int i = scopes.size()-1; i >=0; i--){
     		if(symbolTable.checkSTforItem(scopes.get(i) + inVar)){
     			varName = scopes.get(i) + inVar;
