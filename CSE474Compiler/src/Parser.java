@@ -293,9 +293,17 @@ public class Parser
             {
             	match(Token.CALL);
             	match(Token.ID);		//TODO process ID, make sure it was declared before AS A FUNCTION
+            	if(!symbolTable.checkSTforItem(getScope(previousToken.getId()))) {
+            		error(previousToken, "Error! Call to function that has not been defined in this scope!");
+            		while(currentToken.getType() != Token.SEMICOLON) {
+            			match(currentToken.getType());
+            		}
+            		break;
+            	}
+            	String funcname = getScope(previousToken.getId());
             	match(Token.LPAREN);
             	match(Token.RPAREN);
-            	//TODO	codeFactory stuff for context switch and then a function call.
+            	codeFactory.generateCall(funcname);
             	match(Token.SEMICOLON);
             	break;
             }
