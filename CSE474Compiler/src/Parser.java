@@ -170,7 +170,7 @@ public class Parser
             	Expression lValue;
             	match( Token.INT);
             	lValue = decIdentifier();
-            	if(symbolTable.checkSTforItem(lValue.expressionName)) {			//#ProcessId
+            	if(symbolTable.checkSTforItem(getScope(lValue.expressionName))) {			//#ProcessId
             		error(previousToken, "Error, variable has already been declared");
             		while(currentToken.getType() != Token.SEMICOLON)
             			match(currentToken.getType());
@@ -197,7 +197,7 @@ public class Parser
             	StrExpression lValue;
             	match( Token.STRING);
             	lValue = decStrIdentifier();
-            	if(symbolTable.checkSTforItem(lValue.expressionName)) {			//#ProcessId
+            	if(symbolTable.checkSTforItem(getScope(lValue.expressionName))) {			//#ProcessId
             		error(previousToken, "Error, variable has already been declared");
             		while(currentToken.getType() != Token.SEMICOLON)
             			match(currentToken.getType());
