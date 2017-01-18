@@ -963,7 +963,7 @@ public class Parser
         
         if ( ! symbolTable.checkSTforItem( getScope(previousToken.getId() ) ))
         {
-            error(previousToken, "ERROR variable undefined");
+            error(previousToken, "ERROR variable " + previousToken.getId() + " is undefined");
         }
         return expr;
     }
