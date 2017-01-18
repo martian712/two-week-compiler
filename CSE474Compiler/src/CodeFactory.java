@@ -608,10 +608,10 @@ class CodeFactory {
 	}
 
 	public void generateFuncReturn(String contLabel) {
-		System.out.println("\tPOPL %eax");
-		System.out.println("\tPOPL %ebx");
-		System.out.println("\tPOPL %ecx");
 		System.out.println("\tPOPL %edx");
+		System.out.println("\tPOPL %ecx");
+		System.out.println("\tPOPL %ebx");
+		System.out.println("\tPOPL %eax");
 		System.out.println("\tRET");
 		System.out.println(contLabel + ":");
 		
