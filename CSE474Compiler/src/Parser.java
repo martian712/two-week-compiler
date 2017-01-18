@@ -293,14 +293,14 @@ public class Parser
             {
             	match(Token.CALL);
             	match(Token.ID);		//TODO process ID, make sure it was declared before AS A FUNCTION
-            	if(!symbolTable.checkSTforItem(getScope(previousToken.getId()))) {
+            	if(!symbolTable.checkSTforItem(getScope(previousToken.getId() + "_"))) {
             		error(previousToken, "Error! Call to function that has not been defined in this scope!");
             		while(currentToken.getType() != Token.SEMICOLON) {
             			match(currentToken.getType());
             		}
             		break;
             	}
-            	String funcname = getScope(previousToken.getId());
+            	String funcname = getScope(previousToken.getId() + "_");
             	match(Token.LPAREN);
             	match(Token.RPAREN);
             	codeFactory.generateCall(funcname);
@@ -1010,9 +1010,11 @@ public class Parser
     
     private String getScope(String inVar){
     	String varName = inVar;
-    	for(int i = scopes.size()-1; i >=0; i--){
-    		if(symbolTable.checkSTforItem(scopes.get(i) + inVar)){
-    			varName = scopes.get(i) + inVar;
+    	if(!scopes.isEmpty()) {
+    		for(int i = scopes.size()-1; i >=0; i--){
+    			if(symbolTable.checkSTforItem(scopes.get(i) + inVar)){
+    				varName = scopes.get(i) + inVar;
+    			}
     		}
     	}
     	return varName;
