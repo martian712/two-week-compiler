@@ -446,7 +446,10 @@ public class Parser
 			}
 		} else {
 			error(currentToken, "ID seen at beginning of statement, but variable has not been declared!");		//statement started with an ID but was this var was not previously declared
-			
+			while(currentToken.getType() != Token.SEMICOLON) {
+				match(currentToken.getType());
+			}
+			match(Token.SEMICOLON);
 		}
 	}
     
