@@ -213,9 +213,16 @@ public class Parser
             	match(Token.LPAREN);
             	Expression isresult = relationalExp();
             	match(Token.RPAREN);
+            	String ifScope;
+            	if(scopes.isEmpty())
+            		ifScope = generateLabel("_if");
+            	else
+            		ifScope = generateLabel(scopes.get(scopes.size()-1) + "_if");
+            	scopes.add(ifScope);
             	if(isresult.expressionIntValue != 0) {
             		statementList();
             		match(Token.ENDIF);
+            		scopes.remove(scopes.size()-1);
             		elsepart(false);
             		break;
             	}
@@ -224,6 +231,7 @@ public class Parser
             			match(currentToken.getType());
             		}
             		match(Token.ENDIF);
+            		scopes.remove(scopes.size()-1);
         			elsepart(true);
         			break;
             	}
@@ -237,9 +245,9 @@ public class Parser
             	match(Token.RPAREN);
             	String whileScope;
             	if(scopes.isEmpty())
-            		whileScope = generateLabel("__while");
+            		whileScope = generateLabel("_while");
             	else
-            		whileScope = generateLabel(scopes.get(scopes.size()-1) + "__while");
+            		whileScope = generateLabel(scopes.get(scopes.size()-1) + "_while");
             	scopes.add(whileScope);
             	statementList();
             	codeFactory.generateEndWhile(labels[0], labels[1]);
@@ -372,10 +380,17 @@ public class Parser
     
     private void elsepart(boolean shouldElse) {
 		if (shouldElse) {
+			String elseScope;
+			if(scopes.isEmpty())
+				elseScope = generateLabel("_else");
+			else
+				elseScope = generateLabel(scopes.get(scopes.size()-1) + "_else");
+			scopes.add(elseScope);
 			if (currentToken.getType() == Token.ELSE) {
 				match(Token.ELSE);
 				statementList();
 				match(Token.ENDELSE);
+				scopes.remove(scopes.size()-1);
 			}
 		}
 		else {
