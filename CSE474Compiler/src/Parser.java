@@ -137,7 +137,7 @@ public class Parser
             case Token.ID:
             {
             	
-            	if(symbolTable.checkSTforItem(getScope(currentToken.getId())))	//<statement> -> <assignment> but where the id in assignment already exists
+            	if(symbolTable.checkSTforItem(scopes.get(scopes.size() - 1) + currentToken.getId()))	//<statement> -> <assignment> but where the id in assignment already exists
             	{
             		assignment();
             	}
@@ -197,7 +197,7 @@ public class Parser
             	StrExpression lValue;
             	match( Token.STRING);
             	lValue = decStrIdentifier();
-            	if(symbolTable.checkSTforItem(getScope(lValue.expressionName))) {			//#ProcessId
+            	if(symbolTable.checkSTforItem(scopes.get(scopes.size() - 1) + lValue.expressionName)) {			//#ProcessId
             		error(previousToken, "Error, variable has already been declared");
             		while(currentToken.getType() != Token.SEMICOLON)
             			match(currentToken.getType());
@@ -293,14 +293,14 @@ public class Parser
             {
             	match(Token.CALL);
             	match(Token.ID);		//TODO process ID, make sure it was declared before AS A FUNCTION
-            	if(!symbolTable.checkSTforItem(getScope(previousToken.getId() + "_"))) {
+            	if(!symbolTable.checkSTforItem(scopes.get(scopes.size() - 1) + previousToken.getId() + "_")) {
             		error(previousToken, "Error! Call to function that has not been defined in this scope!");
             		while(currentToken.getType() != Token.SEMICOLON) {
             			match(currentToken.getType());
             		}
             		break;
             	}
-            	String funcname = getScope(previousToken.getId() + "_");
+            	String funcname = (scopes.get(scopes.size()-1) + previousToken.getId() + "_");
             	match(Token.LPAREN);
             	match(Token.RPAREN);
             	codeFactory.generateCall(funcname);
