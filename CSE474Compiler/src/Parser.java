@@ -1012,9 +1012,7 @@ public class Parser
     	String varName = inVar;
     	if(!scopes.isEmpty()) {
     		for(int i = scopes.size()-1; i >=0; i--){
-    			if(symbolTable.checkSTforItem(scopes.get(i) + inVar)){
-    				varName = scopes.get(i) + inVar;
-    			}
+    			varName = scopes.get(i) + inVar;
     		}
     	}
     	return varName;
