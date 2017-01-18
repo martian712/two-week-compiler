@@ -961,14 +961,18 @@ public class Parser
     }
     
     private Expression processNewIdentifier() {
+    	String scopeModifier;
+    	if(scopes.isEmpty())
+    		scopeModifier = "";
+    	else
+    		scopeModifier = scopes.get(scopes.size() - 1);
+    	Expression expr = new Expression(Expression.IDEXPR, scopeModifier + previousToken.getId());
     	
-    	Expression expr = new Expression(Expression.IDEXPR, getScope(previousToken.getId()));
-    	
-    	if( symbolTable.checkSTforItem(getScope(previousToken.getId()))) {
+    	if( symbolTable.checkSTforItem(scopeModifier + previousToken.getId())) {
     		//error(previousToken, "ERROR Variable already defined!");
     	}
     	else {
-    		codeFactory.generateDeclaration(getScope(previousToken.getId()));
+    		codeFactory.generateDeclaration(scopeModifier + previousToken.getId());
     	}
     	return expr;
     }
@@ -986,8 +990,13 @@ public class Parser
     
     private StrExpression processNewStrIdentifier()
     {
-    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, getScope(previousToken.getId()));
-    	if ( symbolTable.checkSTforItem( getScope(previousToken.getId())))
+    	String scopeModifier;
+    	if(scopes.isEmpty())
+    		scopeModifier = "";
+    	else
+    		scopeModifier = scopes.get(scopes.size() - 1);
+    	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, scopeModifier + previousToken.getId());
+    	if ( symbolTable.checkSTforItem(scopeModifier + previousToken.getId()))
     	{
     		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
     		//error(previousToken, "ERROR Variable already defined");
