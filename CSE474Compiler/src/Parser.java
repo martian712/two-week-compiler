@@ -170,6 +170,12 @@ public class Parser
             	Expression lValue;
             	match( Token.INT);
             	lValue = decIdentifier();
+            	if(symbolTable.checkSTforItem(lValue.expressionName)) {			//#ProcessId
+            		error(previousToken, "Error, variable has already been declared");
+            		while(currentToken.getType() != Token.SEMICOLON)
+            			match(currentToken.getType());
+            		break;
+            	}
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> INT id<int_assignment>;
             	{
             		intAssignment(lValue);
@@ -191,6 +197,12 @@ public class Parser
             	StrExpression lValue;
             	match( Token.STRING);
             	lValue = decStrIdentifier();
+            	if(symbolTable.checkSTforItem(lValue.expressionName)) {			//#ProcessId
+            		error(previousToken, "Error, variable has already been declared");
+            		while(currentToken.getType() != Token.SEMICOLON)
+            			match(currentToken.getType());
+            		break;
+            	}
             	if(currentToken.getType() == Token.ASSIGNOP)		//<statement> -> <assignment> then <assignment> -> <str_assignment>
             	{
             		strAssignment(lValue);
@@ -239,7 +251,7 @@ public class Parser
             {
             	match(Token.FUNC);
             	match(Token.ID);		//TODO process ID, make sure it hasn't been used as a function before
-            	scopes.add(previousToken.getId());
+            	scopes.add(previousToken.getId() + "_");
             	match(Token.LPAREN);
             	match(Token.RPAREN);
             	//TODO	codeFactory stuff for the function label
@@ -918,6 +930,7 @@ public class Parser
     }
     
     private Expression processNewIdentifier() {
+    	
     	Expression expr = new Expression(Expression.IDEXPR, previousToken.getId());
     	
     	if( symbolTable.checkSTforItem(previousToken.getId())) {
