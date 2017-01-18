@@ -616,5 +616,8 @@ class CodeFactory {
 		System.out.println(contLabel + ":");
 		
 	}
+	public void generateCall(String funcname){
+		System.out.println("\tCALL " + funcname);
+	}
 
 }
