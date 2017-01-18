@@ -75,6 +75,7 @@ public class Parser
     private static CodeFactory codeFactory;
     private Token currentToken;
     private Token previousToken;
+    private static int labelcount = 0;
     private static boolean signSet = false;
     private static String signFlag = "+";
     private static ArrayList<String> scopes;
@@ -234,9 +235,16 @@ public class Parser
             	String[] labels = new String[2];
             	labels = relationalWhile();
             	match(Token.RPAREN);
+            	String whileScope;
+            	if(scopes.isEmpty())
+            		whileScope = generateLabel("__while");
+            	else
+            		whileScope = generateLabel(scopes.get(scopes.size()-1) + "__while");
+            	scopes.add(whileScope);
             	statementList();
             	codeFactory.generateEndWhile(labels[0], labels[1]);
             	match(Token.ENDWHILE);
+            	scopes.remove(scopes.size()-1);
             	break;
             }
             case Token.FUNC :
@@ -286,7 +294,7 @@ public class Parser
             case Token.CALL :
             {
             	match(Token.CALL);
-            	match(Token.ID);		//TODO process ID, make sure it was declared before AS A FUNCTION
+            	match(Token.ID);		
             	if(!symbolTable.checkSTforItem(getScope(previousToken.getId() + "_"))) {
             		error(previousToken, "Error! Call to function that has not been defined in this scope!");
             		while(currentToken.getType() != Token.SEMICOLON) {
@@ -1007,4 +1015,10 @@ public class Parser
         System.out.println( "Syntax error! Parsing token type " +tokenType + " at line number " + 
                 scanner.getLineNumber() );
     }
+    
+    private String generateLabel(String start) {
+		String label = start + labelcount++;
+		return label;
+
+	}
 }
