@@ -406,6 +406,9 @@ public class Parser
 				}
 				match(Token.SEMICOLON);
 			}
+			else {
+				error(currentToken, "You tried to reassign a func? You madman!");
+			}
 		} else {
 			error(currentToken, "ID seen at beginning of statement, but variable has not been declared!");		//statment started with an ID but was this var was not previously declared
 			
