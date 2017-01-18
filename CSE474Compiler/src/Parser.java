@@ -118,9 +118,6 @@ public class Parser
     
     private void statementList()
     {
-        /*while ( currentToken.getType() == Token.ID || currentToken.getType() == Token.READ || 
-                    currentToken.getType() == Token.WRITE || currentToken.getType() == Token.INT || currentToken.getType() == Token.STRING)
-        */
     	while (currentToken.getType() != Token.END && currentToken.getType() != Token.ENDIF &&
     				currentToken.getType() != Token.ENDELSE && currentToken.getType() != Token.ENDWHILE &&
     				currentToken.getType() != Token.ENDFUNC)
@@ -179,7 +176,7 @@ public class Parser
             		intDeclaration(lValue);
             		break;
             	}
-            	else if(currentToken.getType() == Token.LOGASSIGNOP) //<statement> -> <assignment> then <assignement> -> INT id <log_assignement>;
+            	else if(currentToken.getType() == Token.LOGASSIGNOP) //<statement> -> <assignment> then <assignment> -> INT id <log_assignement>;
             	{
             		logAssignment(lValue);
             		break;
@@ -419,7 +416,7 @@ public class Parser
 				error(currentToken, "You tried to reassign a func? You madman!");
 			}
 		} else {
-			error(currentToken, "ID seen at beginning of statement, but variable has not been declared!");		//statment started with an ID but was this var was not previously declared
+			error(currentToken, "ID seen at beginning of statement, but variable has not been declared!");		//statement started with an ID but was this var was not previously declared
 			
 		}
 	}
@@ -571,26 +568,6 @@ public class Parser
     		result = logprimary();
     		Expression leftOperand = result;
     		result = codeFactory.generateNot(leftOperand, op);
-    		/* OLD NOT STUFF USING SYMBOL TABLE
-    		if(result.expressionType == Expression.IDEXPR) {
-    			if(symbolTable.checkSTforItem(result.expressionName)) {
-    				if(symbolTable.getValue(result.expressionName).getIntValue() == 0) {
-    					symbolTable.getValue(result.expressionName).setValue(1);
-    					result.expressionIntValue = 1;
-    				}
-    				else {
-    					symbolTable.getValue(result.expressionName).setValue(0);
-    					result.expressionIntValue = 0;
-    				}
-    			}
-    			else
-    				error(currentToken, "Variable used in logic expression not defined?");
-    		}
-    		if(result.expressionIntValue == 0)
-    			result.expressionIntValue = 1;
-    		else
-    			result.expressionIntValue = 0;
-    		*/ //END OF OLD NOT STUFF
     	}
     	else {
     		result = logprimary();
@@ -954,7 +931,6 @@ public class Parser
         
         if ( ! symbolTable.checkSTforItem( getScope(previousToken.getId() ) ))
         {
-            //symbolTable.addItem(previousToken.getId());
             error(previousToken, "ERROR variable undefined");
         }
         return expr;
@@ -968,12 +944,8 @@ public class Parser
     		scopeModifier = scopes.get(scopes.size() - 1);
     	Expression expr = new Expression(Expression.IDEXPR, scopeModifier + previousToken.getId());
     	
-    	if( symbolTable.checkSTforItem(scopeModifier + previousToken.getId())) {
-    		//error(previousToken, "ERROR Variable already defined!");
-    	}
-    	else {
+    	if( !symbolTable.checkSTforItem(scopeModifier + previousToken.getId())) 
     		codeFactory.generateDeclaration(scopeModifier + previousToken.getId());
-    	}
     	return expr;
     }
     
@@ -982,7 +954,6 @@ public class Parser
     	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, getScope(previousToken.getId()));
     	if ( ! symbolTable.checkSTforItem( getScope(previousToken.getId())))
     	{
-    		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
     		error(previousToken, "ERROR Variable not defined");
     	}
     	return expr;
@@ -996,11 +967,6 @@ public class Parser
     	else
     		scopeModifier = scopes.get(scopes.size() - 1);
     	StrExpression expr = new StrExpression(StrExpression.STRIDEXPR, scopeModifier + previousToken.getId());
-    	if ( symbolTable.checkSTforItem(scopeModifier + previousToken.getId()))
-    	{
-    		//codeFactory.generateStrAssignment(previousToken.getId(), new StrExpression(StrExpression.STRIDEXPR, "", ""));
-    		//error(previousToken, "ERROR Variable already defined");
-    	}
     	return expr;
     }
     
