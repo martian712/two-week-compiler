@@ -137,7 +137,7 @@ public class Parser
             case Token.ID:
             {
             	
-            	if(symbolTable.checkSTforItem(currentToken.getId()))	//<statement> -> <assignment> but where the id in assignment already exists
+            	if(symbolTable.checkSTforItem(getScope(currentToken.getId())))	//<statement> -> <assignment> but where the id in assignment already exists
             	{
             		assignment();
             	}
