@@ -13,6 +13,10 @@ public class Value {
 		this.type = "STRING";
 		this.strValue = inValue;
 	}
+	public Value(String inType, String inValue){
+		this.type = inType;
+		this.strValue = inValue;
+	}
 
 	public String getType() {
 		return type;

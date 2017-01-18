@@ -30,6 +30,10 @@ class SymbolTable
     	symTable.put(key, new Value(value));
     }
     
+    public void addItem(String key, String inType, String inValue){
+    	symTable.put(key, new Value(inType,inValue));
+    }
+    
     public boolean checkSTforItem( String key )
     {
        return symTable.containsKey(key);
