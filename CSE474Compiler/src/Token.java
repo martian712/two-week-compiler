@@ -44,6 +44,10 @@ public class Token
     public final static int FUNC = 37;
     public final static int ENDFUNC = 38;
     public final static int CALL = 39;
+    public final static int FOR = 40;
+    public final static int ENDFOR = 41;
+    public final static int INC = 42;
+    public final static int DEC = 43;
 
     public Token( String tokenString, int tokenType)
     {
@@ -70,6 +74,10 @@ public class Token
             else if ( temp.compareTo("func") == 0) type = FUNC;
             else if ( temp.compareTo("endfunc") == 0) type = ENDFUNC;
             else if ( temp.compareTo("call") == 0) type = CALL;
+            else if ( temp.compareTo("for") == 0) type = FOR;
+            else if ( temp.compareTo("endfor") == 0) type = ENDFOR;
+            else if ( temp.compareTo("inc") == 0) type = INC;
+            else if ( temp.compareTo("dec") == 0) type = DEC;
             
         }
     }
@@ -126,6 +134,10 @@ public class Token
             case FUNC : str = "FUNC"; break;
             case ENDFUNC : str = "ENDFUNC"; break;
             case CALL : str = "CALL"; break;
+            case FOR : str = "FOR"; break;
+            case ENDFOR : str = "ENDFOR"; break;
+            case INC : str = "INC"; break;
+            case DEC : str = "DEC"; break;
             default: str = "Lexical Error";
         }
         return str;

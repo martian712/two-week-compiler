@@ -44,6 +44,7 @@ import java.util.ArrayList;
 	<if_stmt>        	-> IF ( <rel_expr> ) <statment_list> ENDIF <else_stmt>
 	<else_stmt>        	-> ELSE <statment_list> ENDELSE | lambda
 	<while_stmt>        -> WHILE ( <rel_expr> ) <statment_list> ENDWHILE
+	<for_stmt>			-> FOR ( <int_assignment> <logexpression> ; id #processID <inc_op> ) <statement_list> ENDFOR 
 	<assignment>        -> INT id <int_assignment> | STRING id <string_assignment> |
                 			INT id <logic_assignment> |
 							id #processID := <expression> |
@@ -65,6 +66,7 @@ import java.util.ArrayList;
 	<addop>        		-> + | -
 	<multop>        	-> * | / | %
 	<rel_op>        	-> < | > | == | <= | >= | !=
+	<inc_op>			-> INC | DEC
  */
 
 
@@ -121,7 +123,7 @@ public class Parser
     {
     	while (currentToken.getType() != Token.END && currentToken.getType() != Token.ENDIF &&
     				currentToken.getType() != Token.ENDELSE && currentToken.getType() != Token.ENDWHILE &&
-    				currentToken.getType() != Token.ENDFUNC)
+    				currentToken.getType() != Token.ENDFUNC && currentToken.getType() != Token.ENDFOR)
         {
             statement();
         }
@@ -318,6 +320,30 @@ public class Parser
             	match(Token.SEMICOLON);
             	break;
             }
+            case Token.FOR:
+            {
+            	match(Token.FOR);
+            	match(Token.LPAREN);
+            	String forScope;
+            	if(scopes.isEmpty())
+            		forScope = generateLabel("_for");
+            	else
+            		forScope = generateLabel(scopes.get(scopes.size()-1) + "_for");
+            	scopes.add(forScope);
+            	match(Token.INT);
+            	Expression forint = decIdentifier();
+            	intAssignment(forint);
+            	String[] forlabels = forLoop();
+            	match(Token.SEMICOLON);
+            	Expression forchange = identifier();
+            	Operation op = incOperation();
+            	match(Token.RPAREN);
+            	statementList();
+            	match(Token.ENDFOR);
+            	codeFactory.generateForEnd(forchange, op, forlabels[0], forlabels[1]);
+            	scopes.remove(scopes.size() - 1);
+            	break;
+            }
             default: 
             {
             	error(currentToken, "ERROR! Not a valid <statement>!");
@@ -477,6 +503,24 @@ public class Parser
             expr = expression();
             codeFactory.generateWrite(expr);
         }
+    }
+    
+    private String[] forLoop() {
+    	String[] labels = new String[2];
+    	Expression result;
+    	Expression leftOperand;
+    	Expression rightOperand;
+    	Operation op;
+    	
+    	result = logexpression();
+    	if(currentToken.getType() == Token.EQUAL || currentToken.getType() == Token.GREATEREQUAL || currentToken.getType() == Token.GREATERTHAN || 
+    			currentToken.getType() == Token.LESSEQUAL || currentToken.getType() == Token.LESSTHAN || currentToken.getType() == Token.NOTEQUAL){
+    		leftOperand = result;
+    		op = relOperation();
+    		rightOperand = logexpression();
+    		labels = codeFactory.generateForLabel(leftOperand, rightOperand, op);
+    	}
+    	return labels;
     }
     private String[] relationalWhile(){
     	String[] labels = new String[2];
@@ -845,6 +889,28 @@ public class Parser
     	return op;
     }
     
+    private Operation incOperation() {
+    	Operation op = new Operation();
+    	switch (currentToken.getType())
+    	{
+    	case Token.INC:
+    	{
+    		match(Token.INC);
+    		op = processOperation();
+    		break;
+    	}
+    	case Token.DEC:
+    	{
+    		match(Token.DEC);
+    		op = processOperation();
+    		break;
+    	}
+    	default: error(currentToken, "Expected INC or DEC here");
+    	}
+    	return op;
+    	
+    }
+    
     private Expression decIdentifier()
     {
         Expression expr;
@@ -952,6 +1018,8 @@ public class Parser
         case Token.LESSEQUAL: { op.opType = Token.LESSEQUAL; break; }
         case Token.LESSTHAN: { op.opType = Token.LESSTHAN; break; }
         case Token.NOTEQUAL: { op.opType = Token.NOTEQUAL; break; }
+        case Token.INC: { op.opType = Token.INC; break; }
+        case Token.DEC: { op.opType = Token.DEC; break; }
         default: error( previousToken );
         }
         return op;

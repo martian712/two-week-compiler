@@ -620,4 +620,76 @@ class CodeFactory {
 		System.out.println("\tCALL " + funcname);
 	}
 
+	public String[] generateForLabel(Expression left, Expression right, Operation op) {
+		String cont = generateLabel("__cont");
+		String loop = generateLabel("__forloop");
+		System.out.println(loop + ":");
+		if (right.expressionType == Expression.LITERALEXPR) {
+			System.out.println("\tMOVL " + "$" + right.expressionName + ", %ebx");
+		} else {
+			System.out.println("\tMOVL " + right.expressionName + ", %ebx");
+		}
+		if (left.expressionType == Expression.LITERALEXPR) {
+			System.out.println("\tMOVL " + "$" + left.expressionName + ", %eax");
+		} else {
+			System.out.println("\tMOVL " + left.expressionName + ", %eax");
+		}
+		if(op.opType == Token.EQUAL){
+		System.out.println("\tCMPL %ebx, %eax");
+		System.out.println("\tJNE " + cont);
+		
+		}else if(op.opType == Token.GREATEREQUAL){
+		System.out.println("\tCMPL %ebx, %eax");
+		System.out.println("\tJL " + cont);
+
+		
+		}else if(op.opType == Token.GREATERTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJLE " + cont);
+		
+		}else if(op.opType == Token.LESSEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJG " + cont);
+
+		
+		}else if(op.opType == Token.LESSTHAN){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJGE " + cont);
+		
+		}else if (op.opType == Token.NOTEQUAL){
+			System.out.println("\tCMPL %ebx, %eax");
+			System.out.println("\tJE " + cont);
+
+		
+		}
+		String[] labels = new String[2];
+		labels[0] = loop;
+		labels[1] = cont;
+		return labels;
+	}
+
+	public void generateForEnd(Expression forchange, Operation op, String loop, String cont) {
+		if(forchange.expressionType == Expression.IDEXPR) {
+			System.out.println("\tMOVL " + forchange.expressionName + " %eax");
+		}
+		else {
+			System.out.println("ERROR IN CODEFACTORY, value in for loop to change is not an int variable ID");
+			return;
+		}
+		if(op.opType == Token.INC) {
+			System.out.println("\tADDL $1, %eax");
+		}
+		else if (op.opType == Token.DEC) {
+			System.out.println("\tSUBL $1, %eax");
+		}
+		else {
+			System.out.println("ERROR IN CODEFACTORY, operator at end of for loop is not INC or DEC");
+			return;
+		}
+		System.out.println("\tMOVL %eax, " + forchange.expressionName);
+		System.out.println("\tJMP " + loop);
+		System.out.println(cont + ":");
+	}
+	
+
 }
