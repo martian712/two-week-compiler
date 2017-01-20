@@ -351,6 +351,7 @@ public class Parser
             	Operation op = incOperation();
             	Expression expr = identifier();
             	codeFactory.generateInc(expr,op);
+            	match(Token.SEMICOLON);
             	break;
             }
             default: 
