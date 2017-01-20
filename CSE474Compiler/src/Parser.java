@@ -345,15 +345,13 @@ public class Parser
             	scopes.remove(scopes.size() - 1);
             	break;
             }
+            case Token.DEC:
             case Token.INC:
             {
             	Operation op = incOperation();
             	Expression expr = identifier();
-            	
-            }
-            case Token.DEC:
-            {
-            	
+            	codeFactory.generateInc(expr,op);
+            	break;
             }
             default: 
             {
