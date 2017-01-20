@@ -670,7 +670,7 @@ class CodeFactory {
 
 	public void generateForEnd(Expression forchange, Operation op, String loop, String cont) {
 		if(forchange.expressionType == Expression.IDEXPR) {
-			System.out.println("\tMOVL " + forchange.expressionName + " %eax");
+			System.out.println("\tMOVL " + forchange.expressionName + " ,%eax");
 		}
 		else {
 			System.out.println("ERROR IN CODEFACTORY, value in for loop to change is not an int variable ID");
