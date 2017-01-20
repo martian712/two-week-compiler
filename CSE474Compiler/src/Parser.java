@@ -38,6 +38,7 @@ import java.util.ArrayList;
 	<statement>        	-> <func_declaration>
 	<statement>        	-> <func_call>
 	<statement>        	-> <if_stmt> | <else_stmt> | <while_stmt>
+	<statement>			-> id #processID <inc_op>;
 	<declaration>       -> INT id; | STRING id;
 	<func_declaration>  -> FUNC id ( ) <statement_list> ENDFUNC
 	<func_call>        	-> CALL id #ProcessId ( ) ;
@@ -343,6 +344,16 @@ public class Parser
             	codeFactory.generateForEnd(forchange, op, forlabels[0], forlabels[1]);
             	scopes.remove(scopes.size() - 1);
             	break;
+            }
+            case Token.INC:
+            {
+            	Operation op = incOperation();
+            	Expression expr = identifier();
+            	
+            }
+            case Token.DEC:
+            {
+            	
             }
             default: 
             {
