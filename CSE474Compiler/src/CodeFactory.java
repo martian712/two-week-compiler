@@ -14,6 +14,18 @@ class CodeFactory {
 		strVariables = new SymbolTable();
 	}
 	
+	void generateInc(Expression right, Operation op){
+		System.out.println("\tMOVL " + right.expressionName + ", %eax");
+		System.out.println("\tMOVL $1, %ebx");
+		if(op.opType == Token.INC){
+			System.out.println("\tADDL %ebx, %eax");
+			
+		}else if(op.opType == Token.DEC){
+			System.out.println("\tSUBL %ebx, %eax");
+		}
+		System.out.println("\tMOVL %eax, " + right.expressionName);
+	}
+	
 	Expression generateNot(Expression right, Operation op){
 		String falseLable = generateLabel("__false");
 		String trueLable = generateLabel("__true");
